@@ -29,11 +29,38 @@
     .top{display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start}
     @media (max-width:900px){.top{grid-template-columns:1fr}}
 
-    .frames{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
-    .frame{background:var(--panel);padding:8px;border-radius:14px;box-shadow:0 6px 18px rgba(0,0,0,0.1);cursor:pointer;overflow:hidden;transition:transform .2s,box-shadow .2s;position:relative}
-    .frame:hover{transform:translateY(-5px) scale(1.02);box-shadow:0 10px 22px rgba(0,0,0,0.15)}
-    .frame img,.frame video{width:100%;height:220px;object-fit:cover;border-radius:10px}
-    .frame .caption{padding:10px 6px;font-size:14px;color:var(--muted);text-align:center}
+    .frames{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:14px;
+    }
+
+    .frame{
+      background:var(--panel);
+      padding:8px;
+      border-radius:14px;
+      box-shadow:0 6px 18px rgba(0,0,0,0.1);
+      cursor:pointer;
+      overflow:hidden;
+      transition:transform .2s,box-shadow .2s,opacity .6s ease-out;
+      position:relative;
+      opacity:0;
+      transform:translateY(20px);
+    }
+    .frame.visible{
+      opacity:1;
+      transform:translateY(0);
+    }
+    .frame:hover{
+      transform:translateY(-5px) scale(1.02);
+      box-shadow:0 10px 22px rgba(0,0,0,0.15);
+    }
+    .frame img,.frame video{
+      width:100%;
+      height:220px;
+      object-fit:cover;
+      border-radius:10px;
+    }
 
     .letter{background:rgba(255,255,255,0.9);padding:18px;border-radius:16px;box-shadow:0 6px 18px rgba(0,0,0,0.1)}
     .letter h2{margin:0 0 8px;color:var(--accent)}
@@ -61,26 +88,13 @@
 <body>
   <header>
     <h1>Happy Anniversary Baby!!!!</h1>
-    <p class="lead">Our memories<3</p>
+    <p class="lead">Our memories &lt;3</p>
   </header>
 
   <main class="container">
     <section class="top grid">
       <div>
-        <div class="frames" id="gallery">
-          <div class="frame" data-type="image" data-src="https://picsum.photos/seed/dudububu1/1200/800" tabindex="0">
-            <img src="https://picsum.photos/seed/dudububu1/800/600" alt="Photo 1">
-            <div class="caption">Our first date — Bubu smiling so wide!</div>
-          </div>
-          <div class="frame" data-type="image" data-src="https://picsum.photos/seed/dudububu2/1200/800" tabindex="0">
-            <img src="https://picsum.photos/seed/dudububu2/800/600" alt="Photo 2">
-            <div class="caption">Dudu making silly faces again 💕</div>
-          </div>
-          <div class="frame" data-type="video" data-src="https://www.w3schools.com/html/mov_bbb.mp4" tabindex="0">
-            <video muted playsinline src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
-            <div class="caption">A video of our laughter together 🐻🐰</div>
-          </div>
-        </div>
+        <div class="frames" id="gallery"></div>
 
         <div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap">
           <button class="btn" id="openSlideshow">Start Slideshow</button>
@@ -138,7 +152,7 @@ Your silly Dudu/Bubu 🐻🐰
   </main>
 
   <footer>
-    Made with love by Dudu & Bubu 💕 — Replace the sample images, videos, and songs with your real memories.
+    Made with love by Dudu & Bubu 💕
   </footer>
 
   <script>
@@ -147,6 +161,30 @@ Your silly Dudu/Bubu 🐻🐰
     const mediaHolder = document.getElementById('mediaHolder');
     const closeModal = document.getElementById('closeModal');
 
+    // 🩷 AUTO-LOAD 256 PHOTOS
+    const totalImages = 256;
+    for (let i = 1; i <= totalImages; i++) {
+      const frame = document.createElement('div');
+      frame.className = 'frame';
+      frame.dataset.type = 'image';
+      frame.dataset.src = `images/${i}.png`;
+      frame.tabIndex = 0;
+      frame.innerHTML = `<img src="images/${i}.png" alt="Memory ${i}">`;
+      gallery.appendChild(frame);
+    }
+
+    // 🩵 Fade-in animation using IntersectionObserver
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },{threshold:0.2});
+    document.querySelectorAll('.frame').forEach(f=>observer.observe(f));
+
+    // Lightbox logic
     gallery.addEventListener('click', e => {
       let f = e.target.closest('.frame');
       if (!f) return;
@@ -167,6 +205,7 @@ Your silly Dudu/Bubu 🐻🐰
     }
     closeModal.addEventListener('click',()=>{lightbox.classList.remove('open');lightbox.setAttribute('aria-hidden','true');mediaHolder.innerHTML='';});
 
+    // Slideshow
     document.getElementById('openSlideshow').addEventListener('click', ()=>{
       const frames = Array.from(document.querySelectorAll('.frame'));
       let idx = 0;
@@ -179,6 +218,7 @@ Your silly Dudu/Bubu 🐻🐰
       showNext();
     });
 
+    // Letter
     const printLetter=document.getElementById('printLetter');
     const editLetter=document.getElementById('editLetter');
     const letterText=document.getElementById('letterText');
@@ -195,6 +235,7 @@ Your silly Dudu/Bubu 🐻🐰
       if(t!==null) letterText.innerText=t;
     });
 
+    // Music Player
     const audio=new Audio();
     const tracks=Array.from(document.querySelectorAll('.track'));
     let current=0;
