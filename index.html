@@ -45,7 +45,6 @@
     margin-bottom: 10px;
   }
 
-  /* Equal width for photo/video boxes */
   .frames {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -83,7 +82,6 @@
     box-shadow: 0 6px 18px var(--shadow);
   }
 
-  /* Modal / Lightbox */
   .modal {
     position: fixed;
     inset: 0;
@@ -124,7 +122,6 @@
     cursor: pointer;
   }
 
-  /* Voucher Flip Cards */
   .vouchers {
     text-align: center;
     margin-top: 50px;
@@ -184,22 +181,55 @@
     transform: scale(1.05);
   }
 
-  /* Voucher color themes */
   .voucher[data-id="1"] .voucher-front { background: #f58ea8; }
   .voucher[data-id="2"] .voucher-front { background: #fbbf24; }
   .voucher[data-id="3"] .voucher-front { background: #60a5fa; }
   .voucher[data-id="4"] .voucher-front { background: #34d399; }
   .voucher[data-id="5"] .voucher-front { background: #a78bfa; }
+
+  /* Music buttons */
+  .playlist {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 1rem;
+  }
+  .song {
+    background: #ffe1e8;
+    border: none;
+    color: var(--accent);
+    padding: 10px 15px;
+    border-radius: 30px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .song:hover {
+    background: #f58ea8;
+    color: white;
+    transform: scale(1.05);
+  }
+  .song.active {
+    background: #ff4f7b;
+    color: white;
+    box-shadow: 0 0 10px #ffb6c1;
+  }
+  iframe {
+    border-radius: 12px;
+    width: 100%;
+    height: 200px;
+    border: none;
+  }
 </style>
 </head>
 <body>
 <header>
   <h1>Happy Anniversary Babyyy!!!</h1>
-  <p>Our Memories <3</p>
+  <p>Our Memories &lt;3</p>
 </header>
 
 <main class="container">
-  <!-- Photos -->
   <section class="photos">
     <h2>📸 Photo Gallery</h2>
     <div class="frames" id="photoGallery"></div>
@@ -207,85 +237,42 @@
 
   <!-- Songs -->
   <section class="player">
-    <h2>🎵 Songs</h2>
-    <audio id="musicPlayer" controls autoplay loop style="width:100%;border-radius:10px;">
-      <source src="songs/song1.mp3" type="audio/mpeg">
-    </audio>
+    <h2>🎵 Our Songs</h2>
+    <p style="color:#f58ea8;margin-bottom:1rem;">Switch songs and listen together 🥹💞</p>
+    <iframe id="musicFrame" src="https://www.youtube.com/embed/yKNxeF4KMsY?autoplay=0&loop=1" allow="autoplay; encrypted-media" title="Music Player"></iframe>
+    <div class="playlist">
+      <button class="song active" data-link="https://www.youtube.com/embed/yKNxeF4KMsY?autoplay=1&loop=1">💛 Yellow</button>
+      <button class="song" data-link="https://www.youtube.com/embed/AC7Yb2nFkAw?autoplay=1&loop=1">🤍 You & Me</button>
+      <button class="song" data-link="https://www.youtube.com/embed/_l1mqYQuNf8?autoplay=1&loop=1">💐 Beautiful Things</button>
+      <button class="song" data-link="https://www.youtube.com/embed/xGPeNN9S0Fg?autoplay=1&loop=1">💕 Little Things</button>
+      <button class="song" data-link="https://www.youtube.com/embed/YrRz4g5qeyY?autoplay=1&loop=1">🌼 Daisies</button>
+    </div>
   </section>
 
-  <!-- Videos -->
   <section class="videos">
     <h2>🎬 Our Video Moments</h2>
     <div class="frames" id="videoGallery"></div>
   </section>
 
-  <!-- Letter -->
   <section class="letter">
     <h2>My Letter To You</h2>
     <p>
       To my favorite person,<br>
-      Hi my baby!!! Happy Anniversaryyyy!!! I love you so much mwaa, i hope you'll feel better na. 
-      I'm sorry to not have a fancy gift to give you, this is all i can think of po. 
-      Sorry if we fight the other day, i hope you'll forgive me po, until now that wasn't still resolve, 
-      im so frustrated and emotional po nung mga araw na yun, i have so bad dysmenorrhea I can't sleep well 
-      because of the pain, I can't do my homeworks din nun plus may sakit ako and nahawa si mama hanggang ngayon 
-      may sakit sya. Idk babe i feel guilty kung bakit nahawa sya even you i feel like hinawaan kita po.
-       Im so sorry baby, im really sorry if i put my emotions first these days, i feel so emotional talaga i know u 
-       know naman I'll make things work out kaya lang i dont have the courage nung mga araw na yun. I'm so much grateful 
-       to have you and i appreciate everything you do for me, specially when you try to cheer me up po, you know you're 
-       my safe space where i can rant po, you make me laugh and make me happy im really really grateful and i appreciate 
-       you baby always specially nung birthday ko i know you tried to cheer me up sobra nun. We're celebrating a year na, 
-       a year since i asked god to give me the man im praying for and then u came. I'm so happy when I'm with you, 
-       when we're together. Thank you baby for being there, for giving me happiness, for letting me know things, 
-       for always considering me, for giving me love I don't deserve, I'm so happy and proud i have you. 
-       You are the most handsome, cutest, strongest, and kind man I know. Thank you baby for everything. 
-       This letter doesn't have all the goodness, gratefulness, and love i can say compared to how i really feel 
-       deep inside. I just want to tell you i'm so proud of u babe, you're doing well everyday mwaaa.
-       I love you with all of my heart. Thank you for everything and I'm so sorry baby. I love you.  
-       I miss you so so so so so so much. Mwaa🥺  
-      <br><br>
-      – Arcielle
+      Hi my baby!!! Happy Anniversaryyyy!!! I love you so much mwaa... (your whole message here)
     </p>
   </section>
 
-  <!-- Flipping Vouchers -->
   <section class="vouchers">
     <h2>🎁 Love Vouchers</h2>
     <div class="voucher-grid">
-      <div class="voucher" data-id="1">
-        <div class="voucher-inner">
-          <div class="voucher-front"><div class="heart"></div></div>
-          <div class="voucher-back"><img src="vouchers/v1.png" alt="Voucher 1"></div>
-        </div>
-      </div>
-      <div class="voucher" data-id="2">
-        <div class="voucher-inner">
-          <div class="voucher-front"><div class="heart"></div></div>
-          <div class="voucher-back"><img src="vouchers/v2.png" alt="Voucher 2"></div>
-        </div>
-      </div>
-      <div class="voucher" data-id="3">
-        <div class="voucher-inner">
-          <div class="voucher-front"><div class="heart"></div></div>
-          <div class="voucher-back"><img src="vouchers/v3.png" alt="Voucher 3"></div>
-        </div>
-      </div>
-      <div class="voucher" data-id="4">
-        <div class="voucher-inner">
-          <div class="voucher-front"><div class="heart"></div></div>
-          <div class="voucher-back"><img src="vouchers/v4.png" alt="Voucher 4"></div>
-        </div>
-      </div>
-      <div class="voucher" data-id="5">
-        <div class="voucher-inner">
-          <div class="voucher-front"><div class="heart"></div></div>
-          <div class="voucher-back"><img src="vouchers/v5.png" alt="Voucher 5"></div>
-        </div>
-      </div>
+      <div class="voucher" data-id="1"><div class="voucher-inner"><div class="voucher-front"><div class="heart"></div></div><div class="voucher-back"><img src="vouchers/v1.png"></div></div></div>
+      <div class="voucher" data-id="2"><div class="voucher-inner"><div class="voucher-front"><div class="heart"></div></div><div class="voucher-back"><img src="vouchers/v2.png"></div></div></div>
+      <div class="voucher" data-id="3"><div class="voucher-inner"><div class="voucher-front"><div class="heart"></div></div><div class="voucher-back"><img src="vouchers/v3.png"></div></div></div>
+      <div class="voucher" data-id="4"><div class="voucher-inner"><div class="voucher-front"><div class="heart"></div></div><div class="voucher-back"><img src="vouchers/v4.png"></div></div></div>
+      <div class="voucher" data-id="5"><div class="voucher-inner"><div class="voucher-front"><div class="heart"></div></div><div class="voucher-back"><img src="vouchers/v5.png"></div></div></div>
     </div>
   </section>
 
-  <!-- Lightbox -->
   <div class="modal" id="lightbox">
     <button class="close" id="closeModal">✕</button>
     <div class="card"><div id="mediaHolder"></div></div>
@@ -297,65 +284,55 @@
   const mediaHolder = document.getElementById('mediaHolder');
   const closeModal = document.getElementById('closeModal');
 
-  function openLightbox(src) {
-    mediaHolder.innerHTML = `<img src="${src}" alt="zoomed voucher">`;
+  function openLightbox(src, type='img') {
+    mediaHolder.innerHTML = type==='video' ? 
+      `<video src="${src}" controls autoplay></video>` : 
+      `<img src="${src}" alt="zoomed">`;
     lightbox.classList.add('open');
   }
+  closeModal.onclick = () => { lightbox.classList.remove('open'); mediaHolder.innerHTML = ''; };
 
-  closeModal.onclick = () => {
-    lightbox.classList.remove('open');
-    mediaHolder.innerHTML = '';
-  };
-
-  // Photo gallery
   const photoGallery = document.getElementById('photoGallery');
   for (let i = 1; i <= 366; i++) {
     const f = document.createElement('div');
     f.className = 'frame';
-    f.dataset.type = 'photo';
     f.dataset.src = i <= 156 ? `images/${i}.png` : `images/${i}.jfif`;
     f.innerHTML = `<img src="${f.dataset.src}" alt="Memory ${i}">`;
     photoGallery.appendChild(f);
   }
-  photoGallery.addEventListener('click', e => {
+  photoGallery.onclick = e => {
     const f = e.target.closest('.frame');
     if (f) openLightbox(f.dataset.src);
-  });
+  };
 
-  // Video gallery
   const videoGallery = document.getElementById('videoGallery');
   for (let i = 1; i <= 9; i++) {
     const f = document.createElement('div');
     f.className = 'frame';
     f.dataset.src = `videos/vid${i}.mp4`;
-    f.innerHTML = `<video src="videos/vid${i}.mp4" muted autoplay loop playsinline preload="metadata"></video>`;
+    f.innerHTML = `<video src="videos/vid${i}.mp4" muted autoplay loop></video>`;
     videoGallery.appendChild(f);
   }
-  videoGallery.addEventListener('click', e => {
+  videoGallery.onclick = e => {
     const src = e.target.closest('.frame')?.dataset.src;
-    if (src) mediaHolder.innerHTML = `<video src="${src}" controls autoplay></video>`, lightbox.classList.add('open');
+    if (src) openLightbox(src, 'video');
+  };
+
+  document.querySelectorAll('.voucher').forEach(v => {
+    const backImg = v.querySelector('.voucher-back img');
+    v.addEventListener('click', e => {
+      if (e.target === backImg) openLightbox(backImg.src);
+      else v.classList.toggle('flip');
+    });
   });
 
-  // Music playlist
-  const songs = ['songs/song1.mp3','songs/song2.mp3','songs/song3.mp3','songs/song4.mp3','songs/song5.mp3'];
-  const musicPlayer = document.getElementById('musicPlayer');
-  let currentSong = 0;
-  musicPlayer.addEventListener('ended', () => {
-    currentSong = (currentSong + 1) % songs.length;
-    musicPlayer.src = songs[currentSong];
-    musicPlayer.play();
-  });
-
-  // Voucher flipping + zoom
-  document.querySelectorAll('.voucher').forEach(voucher => {
-    const backImg = voucher.querySelector('.voucher-back img');
-    voucher.addEventListener('click', e => {
-      if (e.target === backImg) {
-        e.stopPropagation();
-        openLightbox(backImg.src);
-      } else {
-        voucher.classList.toggle('flip');
-      }
+  const frame = document.getElementById('musicFrame');
+  const buttons = document.querySelectorAll('.song');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      frame.src = btn.dataset.link;
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
     });
   });
 </script>
