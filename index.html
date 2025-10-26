@@ -92,37 +92,6 @@
     box-shadow: 0 6px 18px var(--shadow);
   }
 
-  /* Music Player */
-  .music-player {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 14px;
-  }
-  .music-title {
-    font-weight: 600;
-    color: #f58ea8;
-    text-align: center;
-  }
-  .controls {
-    display: flex;
-    gap: 12px;
-  }
-  .controls button {
-    background: var(--accent);
-    border: none;
-    color: #fff;
-    padding: 10px 18px;
-    border-radius: 50px;
-    cursor: pointer;
-    font-size: 16px;
-    box-shadow: 0 3px 8px rgba(245, 142, 168, 0.3);
-    transition: transform 0.2s;
-  }
-  .controls button:hover {
-    transform: scale(1.1);
-  }
-
   /* Modal */
   .modal {
     position: fixed;
@@ -179,14 +148,9 @@
   <!-- Songs -->
   <section class="player">
     <h2>🎵 Our Songs</h2>
-    <div class="music-player">
-      <div class="music-title" id="musicTitle">Song 1</div>
-      <div class="controls">
-        <button id="playBtn">▶️ Play</button>
-        <button id="pauseBtn">⏸️ Pause</button>
-      </div>
-      <audio id="musicPlayer" src="songs/song1.mp3"></audio>
-    </div>
+    <audio id="musicPlayer" controls autoplay loop style="width:100%;border-radius:10px;">
+      <source src="songs/song1.mp3" type="audio/mpeg">
+    </audio>
   </section>
 
   <!-- Videos -->
@@ -246,7 +210,7 @@
     mediaHolder.innerHTML = '';
   };
 
-  // --- Load Photos
+  // --- Load Photos (1–156 .png, 157–366 .jfif)
   const photoGallery = document.getElementById('photoGallery');
   for (let i = 1; i <= 366; i++) {
     const f = document.createElement('div');
@@ -261,14 +225,16 @@
     if (f) openFrame(f);
   });
 
-  // --- Load Videos (autoplay muted loop)
+  // --- Load Videos (autoplay muted loop, last one featured)
   const videoGallery = document.getElementById('videoGallery');
   for (let i = 1; i <= 9; i++) {
     const f = document.createElement('div');
     f.className = 'frame' + (i === 9 ? ' featured' : '');
     f.dataset.type = 'video';
     f.dataset.src = `videos/vid${i}.mp4`;
-    f.innerHTML = `<video src="videos/vid${i}.mp4" muted autoplay loop playsinline preload="metadata"></video>`;
+    f.innerHTML = `
+      <video src="videos/vid${i}.mp4" muted autoplay loop playsinline preload="metadata"></video>
+    `;
     videoGallery.appendChild(f);
   }
   videoGallery.addEventListener('click', e => {
@@ -276,37 +242,20 @@
     if (f) openFrame(f);
   });
 
-  // --- Custom Music Playlist ---
+  // --- Music Playlist (5 songs)
   const songs = [
-    { title: "Song 1", src: "songs/song1.mp3" },
-    { title: "Song 2", src: "songs/song2.mp3" },
-    { title: "Song 3", src: "songs/song3.mp3" },
-    { title: "Song 4", src: "songs/song4.mp3" },
-    { title: "Song 5", src: "songs/song5.mp3" },
+    'songs/song1.mp3',
+    'songs/song2.mp3',
+    'songs/song3.mp3',
+    'songs/song4.mp3',
+    'songs/song5.mp3'
   ];
-
   const musicPlayer = document.getElementById('musicPlayer');
-  const musicTitle = document.getElementById('musicTitle');
-  const playBtn = document.getElementById('playBtn');
-  const pauseBtn = document.getElementById('pauseBtn');
-
   let currentSong = 0;
-  musicTitle.textContent = songs[currentSong].title;
-  musicPlayer.src = songs[currentSong].src;
 
-  playBtn.onclick = () => {
-    musicPlayer.play();
-  };
-
-  pauseBtn.onclick = () => {
-    musicPlayer.pause();
-  };
-
-  // Auto next song when one ends
   musicPlayer.addEventListener('ended', () => {
     currentSong = (currentSong + 1) % songs.length;
-    musicPlayer.src = songs[currentSong].src;
-    musicTitle.textContent = songs[currentSong].title;
+    musicPlayer.src = songs[currentSong];
     musicPlayer.play();
   });
 </script>
