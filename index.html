@@ -39,7 +39,6 @@
     padding: 20px;
   }
 
-  /* Centered section titles */
   h2 {
     text-align: center;
     color: #f58ea8;
@@ -83,7 +82,6 @@
     box-shadow: 0 0 20px rgba(245, 142, 168, 0.3);
   }
 
-  /* Sections */
   .letter, .player, .videos {
     background: var(--panel);
     padding: 20px;
@@ -130,6 +128,86 @@
     font-size: 22px;
     cursor: pointer;
   }
+
+  /* Envelopes */
+  .vouchers {
+    text-align: center;
+    margin-top: 50px;
+  }
+  .vouchers h2 {
+    margin-bottom: 20px;
+  }
+  .envelopes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+  }
+  .envelope {
+    position: relative;
+    width: 180px;
+    height: 110px;
+    background: #f58ea8;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease;
+  }
+  .envelope:hover {
+    transform: scale(1.05);
+  }
+  .flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 90px solid transparent;
+    border-right: 90px solid transparent;
+    border-bottom: 55px solid #fcdce5;
+    transform-origin: top;
+    transition: transform 0.6s ease;
+  }
+  .envelope.open .flap {
+    transform: rotateX(180deg);
+  }
+  .heart {
+    position: absolute;
+    top: 38px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 22px;
+    height: 22px;
+    background: #ff6b81;
+    clip-path: polygon(50% 0%, 100% 38%, 80% 100%, 50% 75%, 20% 100%, 0% 38%);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+
+  .voucher-content {
+    display: none;
+    text-align: center;
+    margin-top: 18px;
+    animation: fadeIn 0.7s ease forwards;
+  }
+  .voucher-content h3 {
+    color: #f58ea8;
+    margin-bottom: 10px;
+  }
+  .voucher-content p {
+    font-size: 16px;
+  }
+  .voucher-content img {
+    width: 120px;
+    border-radius: 12px;
+    margin: 8px;
+    border: 3px solid #fbd5e3;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 </style>
 </head>
 <body>
@@ -175,6 +253,72 @@
     </p>
   </section>
 
+  <!-- Voucher Envelopes -->
+  <section class="vouchers">
+    <h2>🎁 Love Vouchers</h2>
+    <div class="envelopes">
+      <div class="envelope" data-id="1">
+        <div class="flap"></div>
+        <div class="heart"></div>
+      </div>
+      <div class="envelope" data-id="2">
+        <div class="flap"></div>
+        <div class="heart"></div>
+      </div>
+      <div class="envelope" data-id="3">
+        <div class="flap"></div>
+        <div class="heart"></div>
+      </div>
+      <div class="envelope" data-id="4">
+        <div class="flap"></div>
+        <div class="heart"></div>
+      </div>
+      <div class="envelope" data-id="5">
+        <div class="flap"></div>
+        <div class="heart"></div>
+      </div>
+    </div>
+
+    <!-- Voucher contents -->
+    <div id="voucherContents">
+      <div class="voucher-content" id="voucher1">
+        <h3>🍿 Movie Night Voucher</h3>
+        <p>Your pick, my treat. I’ll bring snacks and cuddles ❤️</p>
+        <img src="vouchers/movie1.jpg">
+        <img src="vouchers/movie2.jpg">
+        <img src="vouchers/movie3.jpg">
+      </div>
+      <div class="voucher-content" id="voucher2">
+        <h3>💆 Massage Voucher</h3>
+        <p>Redeem for one relaxing back massage from me 💖</p>
+        <img src="vouchers/massage1.jpg">
+        <img src="vouchers/massage2.jpg">
+        <img src="vouchers/massage3.jpg">
+      </div>
+      <div class="voucher-content" id="voucher3">
+        <h3>🍝 Dinner Voucher</h3>
+        <p>I’ll cook your favorite meal and set up a romantic dinner 🍷</p>
+        <img src="vouchers/dinner1.jpg">
+        <img src="vouchers/dinner2.jpg">
+        <img src="vouchers/dinner3.jpg">
+      </div>
+      <div class="voucher-content" id="voucher4">
+        <h3>❤️ Cuddle Marathon</h3>
+        <p>No time limit, just endless hugs and warmth 🧸</p>
+        <img src="vouchers/cuddle1.jpg">
+        <img src="vouchers/cuddle2.jpg">
+        <img src="vouchers/cuddle3.jpg">
+      </div>
+      <div class="voucher-content" id="voucher5">
+        <h3>✨ One Wish Voucher</h3>
+        <p>Whatever you wish for — I’ll make it happen (within reason 😉)</p>
+        <img src="vouchers/wish1.jpg">
+        <img src="vouchers/wish2.jpg">
+        <img src="vouchers/wish3.jpg">
+      </div>
+    </div>
+  </section>
+
   <!-- Lightbox -->
   <div class="modal" id="lightbox">
     <button class="close" id="closeModal">✕</button>
@@ -210,7 +354,7 @@
     mediaHolder.innerHTML = '';
   };
 
-  // --- Load Photos (1–156 .png, 157–366 .jfif)
+  // --- Load Photos
   const photoGallery = document.getElementById('photoGallery');
   for (let i = 1; i <= 366; i++) {
     const f = document.createElement('div');
@@ -225,16 +369,14 @@
     if (f) openFrame(f);
   });
 
-  // --- Load Videos (autoplay muted loop, last one featured)
+  // --- Load Videos
   const videoGallery = document.getElementById('videoGallery');
   for (let i = 1; i <= 9; i++) {
     const f = document.createElement('div');
     f.className = 'frame' + (i === 9 ? ' featured' : '');
     f.dataset.type = 'video';
     f.dataset.src = `videos/vid${i}.mp4`;
-    f.innerHTML = `
-      <video src="videos/vid${i}.mp4" muted autoplay loop playsinline preload="metadata"></video>
-    `;
+    f.innerHTML = `<video src="videos/vid${i}.mp4" muted autoplay loop playsinline preload="metadata"></video>`;
     videoGallery.appendChild(f);
   }
   videoGallery.addEventListener('click', e => {
@@ -242,7 +384,7 @@
     if (f) openFrame(f);
   });
 
-  // --- Music Playlist (5 songs)
+  // --- Music Playlist
   const songs = [
     'songs/song1.mp3',
     'songs/song2.mp3',
@@ -252,11 +394,23 @@
   ];
   const musicPlayer = document.getElementById('musicPlayer');
   let currentSong = 0;
-
   musicPlayer.addEventListener('ended', () => {
     currentSong = (currentSong + 1) % songs.length;
     musicPlayer.src = songs[currentSong];
     musicPlayer.play();
+  });
+
+  // --- Envelope Logic
+  const envelopes = document.querySelectorAll('.envelope');
+  envelopes.forEach(env => {
+    env.addEventListener('click', () => {
+      const id = env.dataset.id;
+      env.classList.add('open');
+      document.querySelectorAll('.voucher-content').forEach(v => v.style.display = 'none');
+      setTimeout(() => {
+        document.getElementById(`voucher${id}`).style.display = 'block';
+      }, 600);
+    });
   });
 </script>
 </body>
