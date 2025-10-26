@@ -1,240 +1,250 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dudu & Bubu Anniversary 💖</title>
-  <style>
-    body {
-      font-family: "Comic Sans MS", cursive;
-      margin: 0;
-      padding: 0;
-      background-color: #fef7fa;
-      color: #333;
-      text-align: center;
-    }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dudu & Bubu Anniversary Gift</title>
+<style>
+  :root {
+    --bg: #fff8f8;
+    --panel: #ffffffcc;
+    --accent: #f58ea8;
+    --shadow: rgba(0, 0, 0, 0.1);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Poppins', 'Comic Sans MS', cursive, sans-serif;
+    background: var(--bg) url('background1.png') center/cover fixed;
+    color: #333;
+    line-height: 1.5;
+  }
+  header {
+    text-align: center;
+    padding: 40px 20px;
+  }
+  header h1 {
+    font-size: clamp(24px, 5vw, 38px);
+    color: #fff;
+    text-shadow: 0 3px 8px rgba(0,0,0,0.2);
+  }
+  header p {
+    font-size: 18px;
+    color: #fff;
+    opacity: 0.9;
+  }
 
-    header {
-      background-color: #ffdce5;
-      padding: 25px;
-      border-bottom: 3px solid #fbc4d4;
-    }
+  .container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 20px;
+  }
 
-    header h1 {
-      color: #ff6f91;
-      font-size: 2.2em;
-      margin: 0;
-    }
+  /* Photo frames */
+  .frames {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 14px;
+  }
+  .frame {
+    background: var(--panel);
+    border-radius: 18px;
+    padding: 10px;
+    box-shadow: 0 4px 10px var(--shadow);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .frame:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  }
+  .frame img, .frame video {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 3px solid #fbd5e3;
+  }
+  .frame.featured {
+    grid-column: span 2;
+  }
+  .frame.featured video {
+    height: 320px;
+    border: 3px solid #f58ea8;
+    box-shadow: 0 0 20px rgba(245, 142, 168, 0.3);
+  }
 
-    section {
-      margin: 50px auto;
-      padding: 20px 10px;
-      max-width: 1200px;
-    }
+  /* Sections */
+  .letter, .player, .videos {
+    background: var(--panel);
+    padding: 20px;
+    border-radius: 16px;
+    margin: 20px 0;
+    box-shadow: 0 6px 18px var(--shadow);
+  }
 
-    h2 {
-      color: #ff6f91;
-      font-size: 1.8em;
-      margin-bottom: 15px;
-      text-align: center;
-      position: relative;
-    }
+  h2, h3 {
+    margin-bottom: 10px;
+    color: #f58ea8;
+  }
 
-    h2::after {
-      content: "";
-      display: block;
-      width: 80px;
-      height: 3px;
-      background-color: #ffc1d3;
-      margin: 8px auto 20px;
-      border-radius: 2px;
-    }
+  /* Modal */
+  .modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s;
+    z-index: 99;
+  }
+  .modal.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .modal .card {
+    background: #111;
+    border-radius: 12px;
+    max-width: 90%;
+    max-height: 90%;
+    padding: 12px;
+  }
+  .modal img, .modal video {
+    width: 100%;
+    border-radius: 10px;
+  }
+  .close {
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 22px;
+    cursor: pointer;
+  }
 
-    .frames {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 16px;
-      padding: 10px;
-      justify-items: center;
-    }
-
-    .frame {
-      border-radius: 12px;
-      overflow: hidden;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .frame:hover {
-      transform: scale(1.03);
-      box-shadow: 0 4px 15px rgba(255, 182, 193, 0.5);
-    }
-
-    .frame img,
-    .frame video {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-      border-radius: 12px;
-      border: 3px solid #fbd5e3;
-      display: block;
-      background-color: #f9e8ec;
-    }
-
-    .frame.featured {
-      grid-column: span 2;
-    }
-
-    .frame.featured video {
-      height: 320px;
-      border: 3px solid #f58ea8;
-      box-shadow: 0 0 20px rgba(245, 142, 168, 0.3);
-    }
-
-    #music audio {
-      margin: 10px;
-      width: 250px;
-    }
-
-    /* Letter section */
-    .letter {
-      max-width: 700px;
-      margin: auto;
-      padding: 25px;
-      background: #fff4f8;
-      border-radius: 15px;
-      box-shadow: 0 2px 10px rgba(255,182,193,0.4);
-      line-height: 1.6;
-    }
-
-    /* Lightbox */
-    .lightbox {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.8);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      z-index: 999;
-    }
-
-    .lightbox.show {
-      visibility: visible;
-      opacity: 1;
-    }
-
-    .lightbox img, .lightbox video {
-      max-width: 90%;
-      max-height: 80%;
-      border-radius: 15px;
-    }
-  </style>
+  footer {
+    text-align: center;
+    padding: 20px;
+    color: #fff;
+    background: #f58ea8;
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+  }
+</style>
 </head>
 <body>
-  <header>
-    <h1>💞 Happy Anniversary, My Dudu & Bubu 💞</h1>
-  </header>
+<header>
+  <h1>Happy Anniversary Baby 💖</h1>
+  <p>Our Dudu & Bubu Memories Forever</p>
+</header>
 
-  <section>
-    <h2>Our Photo Memories 📸</h2>
-    <div class="frames" id="gallery"></div>
+<main class="container">
+  <!-- Photos -->
+  <section class="photos">
+    <h2>📸 Photo Gallery</h2>
+    <div class="frames" id="photoGallery"></div>
   </section>
 
-  <section>
-    <h2>Our Favorite Songs 🎶</h2>
-    <div id="music">
-      <audio controls src="songs/song1.mp3"></audio>
-      <audio controls src="songs/song2.mp3"></audio>
-      <audio controls src="songs/song3.mp3"></audio>
-    </div>
+  <!-- Songs -->
+  <section class="player">
+    <h2>🎵 Our Songs</h2>
+    <audio controls autoplay loop style="width:100%;border-radius:10px;">
+      <source src="songs/song1.mp3" type="audio/mpeg">
+    </audio>
   </section>
 
-  <section>
-    <h2>Our Video Moments 🎬</h2>
+  <!-- Videos -->
+  <section class="videos">
+    <h2>🎬 Our Video Moments</h2>
     <div class="frames" id="videoGallery"></div>
   </section>
 
-  <section>
-    <h2>My Letter to You 💌</h2>
-    <div class="letter">
-      To my dearest love, thank you for all the laughter, the hugs, and the memories.  
-      Every photo and video here is a reminder of our moments together — the little things, the smiles, the warmth.  
-      Here’s to many more years of Dudu & Bubu adventures. 💕
-    </div>
+  <!-- Letter -->
+  <section class="letter">
+    <h2>💌 My Letter To You</h2>
+    <p>
+      To my favorite person,<br><br>
+      Every single moment with you feels like sunshine in my heart.  
+      Through laughter, late-night talks, and quiet moments, you’ve made my world feel softer and brighter.  
+      I made this little website so we can relive the smiles, the memories, and the love we’ve shared.  
+      <br><br>
+      Thank you for being my home, my comfort, and my adventure.  
+      I love you endlessly, my Dudu. 💕  
+      <br><br>
+      – Bubu 🧸
+    </p>
   </section>
 
-  <div class="lightbox" id="lightbox">
-    <img src="" alt="">
-    <video src="" controls></video>
+  <!-- Lightbox -->
+  <div class="modal" id="lightbox">
+    <button class="close" id="closeModal">✕</button>
+    <div class="card"><div id="mediaHolder"></div></div>
   </div>
+</main>
 
-  <script>
-    // === Photo Gallery ===
-    const totalImages = 366;
-    const galleryContainer = document.getElementById('gallery');
+<footer>Made with love by Dudu & Bubu 💕</footer>
 
-    for (let i = 1; i <= totalImages; i++) {
-      const ext = i <= 156 ? 'png' : 'jfif';
-      const frame = document.createElement('div');
-      frame.className = 'frame';
-      frame.dataset.type = 'image';
-      frame.dataset.src = `images/${i}.${ext}`;
-      frame.innerHTML = `<img src="images/${i}.${ext}" alt="Memory ${i}">`;
-      galleryContainer.appendChild(frame);
+<script>
+  const lightbox = document.getElementById('lightbox');
+  const mediaHolder = document.getElementById('mediaHolder');
+  const closeModal = document.getElementById('closeModal');
+
+  function openFrame(f) {
+    const type = f.dataset.type, src = f.dataset.src;
+    mediaHolder.innerHTML = '';
+    if (type === 'photo') {
+      const img = document.createElement('img');
+      img.src = src;
+      mediaHolder.appendChild(img);
+    } else if (type === 'video') {
+      const vid = document.createElement('video');
+      vid.src = src;
+      vid.controls = true;
+      vid.autoplay = true;
+      mediaHolder.appendChild(vid);
     }
+    lightbox.classList.add('open');
+  }
 
-    // === Video Gallery ===
-    const videoGallery = document.getElementById('videoGallery');
-    const totalVideos = 9;
+  closeModal.onclick = () => {
+    lightbox.classList.remove('open');
+    mediaHolder.innerHTML = '';
+  };
 
-    for (let i = 1; i <= totalVideos; i++) {
-      const f = document.createElement('div');
-      f.className = 'frame' + (i === 9 ? ' featured' : '');
-      f.dataset.type = 'video';
-      f.dataset.src = `videos/vid${i}.mp4`;
-      f.innerHTML = `
-        <video src="videos/vid${i}.mp4" muted autoplay loop playsinline preload="metadata"></video>
-      `;
-      videoGallery.appendChild(f);
-    }
+  // --- Load Photos (1–156 .png, 157–366 .jfif)
+  const photoGallery = document.getElementById('photoGallery');
+  for (let i = 1; i <= 366; i++) {
+    const f = document.createElement('div');
+    f.className = 'frame';
+    f.dataset.type = 'photo';
+    f.dataset.src = i <= 156 ? `images/${i}.png` : `images/${i}.jfif`;
+    f.innerHTML = `<img src="${i <= 156 ? `images/${i}.png` : `images/${i}.jfif`}" alt="Memory ${i}">`;
+    photoGallery.appendChild(f);
+  }
+  photoGallery.addEventListener('click', e => {
+    const f = e.target.closest('.frame');
+    if (f) openFrame(f);
+  });
 
-    // === Lightbox (view larger) ===
-    const lightbox = document.getElementById('lightbox');
-    const lbImg = lightbox.querySelector('img');
-    const lbVid = lightbox.querySelector('video');
-
-    function openFrame(frame) {
-      const type = frame.dataset.type;
-      const src = frame.dataset.src;
-      if (type === 'image') {
-        lbVid.style.display = 'none';
-        lbImg.style.display = 'block';
-        lbImg.src = src;
-      } else {
-        lbImg.style.display = 'none';
-        lbVid.style.display = 'block';
-        lbVid.src = src;
-        lbVid.play();
-      }
-      lightbox.classList.add('show');
-    }
-
-    document.getElementById('gallery').addEventListener('click', e => {
-      const f = e.target.closest('.frame');
-      if (f) openFrame(f);
-    });
-
-    document.getElementById('videoGallery').addEventListener('click', e => {
-      const f = e.target.closest('.frame');
-      if (f) openFrame(f);
-    });
-
-    lightbox.addEventListener('click', () => {
-      lightbox.classList.remove('show');
-      lbVid.pause();
-    });
-  </script>
+  // --- Load Videos (9 total, last one featured)
+  const videoGallery = document.getElementById('videoGallery');
+  for (let i = 1; i <= 9; i++) {
+    const f = document.createElement('div');
+    f.className = 'frame' + (i === 9 ? ' featured' : '');
+    f.dataset.type = 'video';
+    f.dataset.src = `videos/vid${i}.mp4`;
+    f.innerHTML = `<video src="videos/vid${i}.mp4" muted ${i===9 ? 'autoplay' : ''} loop playsinline></video>`;
+    videoGallery.appendChild(f);
+  }
+  videoGallery.addEventListener('click', e => {
+    const f = e.target.closest('.frame');
+    if (f) openFrame(f);
+  });
+</script>
 </body>
 </html>
