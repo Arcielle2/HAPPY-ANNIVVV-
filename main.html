@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Dudu & Bubu Anniversary Gift</title>
+  <style>
+    :root{
+      --bg:#fff8f8;
+      --panel:#fff;
+      --accent:#f58ea8;
+      --muted:#7a6c6c;
+      --bubu:#fbd5e3;
+      --dudu:#a4b9e7;
+    }
+    *{box-sizing:border-box}
+    body{
+      font-family:'Poppins', 'Comic Sans MS', cursive, sans-serif;
+      margin:0;background:linear-gradient(180deg,var(--bubu) 0%, var(--dudu) 100%);
+      color:#333;
+      background-attachment:fixed;
+    }
+    header{padding:28px 20px;text-align:center}
+    h1{margin:0;font-size:clamp(22px,4vw,36px);letter-spacing:0.5px;color:#fff;text-shadow:0 2px 4px rgba(0,0,0,0.2)}
+    p.lead{margin:6px 0 0;color:#fefefe;font-size:16px}
+
+    .container{max-width:1100px;margin:24px auto;padding:16px}
+    .grid{display:grid;gap:16px}
+    .top{display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start}
+    @media (max-width:900px){.top{grid-template-columns:1fr}}
+
+    .frames{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+    .frame{background:var(--panel);padding:8px;border-radius:14px;box-shadow:0 6px 18px rgba(0,0,0,0.1);cursor:pointer;overflow:hidden;transition:transform .2s,box-shadow .2s;position:relative}
+    .frame:hover{transform:translateY(-5px) scale(1.02);box-shadow:0 10px 22px rgba(0,0,0,0.15)}
+    .frame img,.frame video{width:100%;height:220px;object-fit:cover;border-radius:10px}
+    .frame .caption{padding:10px 6px;font-size:14px;color:var(--muted);text-align:center}
+
+    .letter{background:rgba(255,255,255,0.9);padding:18px;border-radius:16px;box-shadow:0 6px 18px rgba(0,0,0,0.1)}
+    .letter h2{margin:0 0 8px;color:var(--accent)}
+    .letter .body{white-space:pre-wrap;line-height:1.6;color:#333;font-size:15px}
+    .actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+    .btn{background:var(--accent);color:white;padding:10px 14px;border-radius:10px;border:0;cursor:pointer;font-weight:600;transition:background .2s,transform .1s}
+    .btn:hover{background:#e27691;transform:translateY(-2px)}
+    .btn.ghost{background:transparent;color:var(--accent);border:2px solid var(--accent)}
+
+    .player{background:rgba(255,255,255,0.9);padding:14px;border-radius:16px;box-shadow:0 6px 18px rgba(0,0,0,0.1)}
+    .track{display:flex;align-items:center;gap:10px;padding:8px;border-radius:10px}
+    .track:hover{background:var(--bubu)}
+    .track .meta{flex:1}
+    .controls{display:flex;gap:8px;align-items:center}
+
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;z-index:60;opacity:0;pointer-events:none;transition:opacity .18s}
+    .modal.open{opacity:1;pointer-events:all}
+    .modal .card{max-width:1100px;width:94%;background:#111;border-radius:12px;padding:12px}
+    .modal img,.modal video{width:100%;height:auto;border-radius:8px}
+    .close{position:absolute;top:18px;right:20px;background:transparent;border:0;color:#fff;font-size:22px;cursor:pointer}
+
+    footer{padding:20px;text-align:center;color:#fff;font-size:14px}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Dudu 🐻 & Bubu 🐰 — Our Anniversary</h1>
+    <p class="lead">A cute space of memories, music, and love notes — just for us.</p>
+  </header>
+
+  <main class="container">
+    <section class="top grid">
+      <div>
+        <div class="frames" id="gallery">
+          <div class="frame" data-type="image" data-src="https://picsum.photos/seed/dudububu1/1200/800" tabindex="0">
+            <img src="https://picsum.photos/seed/dudububu1/800/600" alt="Photo 1">
+            <div class="caption">Our first date — Bubu smiling so wide!</div>
+          </div>
+          <div class="frame" data-type="image" data-src="https://picsum.photos/seed/dudububu2/1200/800" tabindex="0">
+            <img src="https://picsum.photos/seed/dudububu2/800/600" alt="Photo 2">
+            <div class="caption">Dudu making silly faces again 💕</div>
+          </div>
+          <div class="frame" data-type="video" data-src="https://www.w3schools.com/html/mov_bbb.mp4" tabindex="0">
+            <video muted playsinline src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
+            <div class="caption">A video of our laughter together 🐻🐰</div>
+          </div>
+        </div>
+
+        <div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap">
+          <button class="btn" id="openSlideshow">Start Slideshow</button>
+          <button class="btn ghost" id="downloadAll">Download Album</button>
+        </div>
+      </div>
+
+      <aside style="display:flex;flex-direction:column;gap:12px">
+        <div class="letter">
+          <h2>Letter for My Dudu / Bubu</h2>
+          <div class="body" id="letterText">
+Hey my love 💖,
+
+Every day with you feels like the sweetest comic strip — funny, soft, and full of hugs. You are my safe place, my Dudu/Bubu, and my forever favorite.
+
+Even when life gets silly or hard, we always find our way back to laughter and snacks. Thank you for being my best friend and my heart’s home.
+
+With love,
+Your silly Dudu/Bubu 🐻🐰
+          </div>
+          <div class="actions">
+            <button class="btn" id="printLetter">Print / Save</button>
+            <button class="btn ghost" id="editLetter">Edit</button>
+          </div>
+        </div>
+
+        <div class="player">
+          <h3 style="margin:0 0 8px">Our Song Album 🎵</h3>
+          <div id="playlist">
+            <div class="track" data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+              <div class="meta"><strong>Dudu & Bubu Theme</strong><div style="font-size:12px;color:var(--muted)">Cute and cozy</div></div>
+              <div class="controls"><button class="btn small" data-action="play">Play</button></div>
+            </div>
+            <div class="track" data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3">
+              <div class="meta"><strong>Our Lazy Sunday</strong><div style="font-size:12px;color:var(--muted)">Warm coffee vibes</div></div>
+              <div class="controls"><button class="btn small" data-action="play">Play</button></div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:8px;align-items:center;margin-top:10px">
+            <button class="btn" id="prevTrack">Prev</button>
+            <button class="btn" id="togglePlay">Play</button>
+            <button class="btn" id="nextTrack">Next</button>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <div class="modal" id="lightbox" aria-hidden="true">
+      <button class="close" id="closeModal">✕</button>
+      <div class="card" role="dialog" aria-modal="true">
+        <div id="mediaHolder"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    Made with love by Dudu & Bubu 💕 — Replace the sample images, videos, and songs with your real memories.
+  </footer>
+
+  <script>
+    const gallery = document.getElementById('gallery');
+    const lightbox = document.getElementById('lightbox');
+    const mediaHolder = document.getElementById('mediaHolder');
+    const closeModal = document.getElementById('closeModal');
+
+    gallery.addEventListener('click', e => {
+      let f = e.target.closest('.frame');
+      if (!f) return;
+      openFrame(f);
+    });
+
+    function openFrame(frame){
+      const type = frame.dataset.type;
+      const src = frame.dataset.src;
+      mediaHolder.innerHTML = '';
+      if(type==='image'){
+        const img = document.createElement('img'); img.src = src; mediaHolder.appendChild(img);
+      } else if(type==='video'){
+        const vid = document.createElement('video'); vid.src = src; vid.controls = true; vid.autoplay = true; mediaHolder.appendChild(vid);
+      }
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden','false');
+    }
+    closeModal.addEventListener('click',()=>{lightbox.classList.remove('open');lightbox.setAttribute('aria-hidden','true');mediaHolder.innerHTML='';});
+
+    document.getElementById('openSlideshow').addEventListener('click', ()=>{
+      const frames = Array.from(document.querySelectorAll('.frame'));
+      let idx = 0;
+      function showNext(){
+        if(idx>=frames.length) return;
+        openFrame(frames[idx]);
+        const cb = () => { idx++; closeModal.click(); if(idx<frames.length) setTimeout(showNext, 700); }
+        setTimeout(cb, 1600);
+      }
+      showNext();
+    });
+
+    const printLetter=document.getElementById('printLetter');
+    const editLetter=document.getElementById('editLetter');
+    const letterText=document.getElementById('letterText');
+
+    printLetter.addEventListener('click',()=>{
+      const w=window.open('','_blank');
+      w.document.write('<html><head><title>Letter</title></head><body style="font-family:Poppins;padding:24px;">'+letterText.innerHTML+'</body></html>');
+      w.document.close();
+      w.print();
+    });
+
+    editLetter.addEventListener('click',()=>{
+      const t=prompt('Edit the letter text',''+letterText.innerText);
+      if(t!==null) letterText.innerText=t;
+    });
+
+    const audio=new Audio();
+    const tracks=Array.from(document.querySelectorAll('.track'));
+    let current=0;
+    function loadTrack(i){current=(i+tracks.length)%tracks.length;audio.src=tracks[current].dataset.src;highlight();}
+    function highlight(){tracks.forEach((tr,idx)=>tr.style.background=idx===current?'#ffe5ec':'transparent');}
+    tracks.forEach((tr,idx)=>{tr.querySelector('button').addEventListener('click',()=>{loadTrack(idx);audio.play();document.getElementById('togglePlay').innerText='Pause';});});
+    document.getElementById('togglePlay').addEventListener('click',function(){if(audio.paused){audio.play();this.innerText='Pause';}else{audio.pause();this.innerText='Play';}});
+    document.getElementById('prevTrack').addEventListener('click',()=>{loadTrack(current-1);audio.play();document.getElementById('togglePlay').innerText='Pause';});
+    document.getElementById('nextTrack').addEventListener('click',()=>{loadTrack(current+1);audio.play();document.getElementById('togglePlay').innerText='Pause';});
+    audio.addEventListener('ended',()=>{loadTrack(current+1);audio.play();});
+    loadTrack(0);
+  </script>
+</body>
+</html>
