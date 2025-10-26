@@ -43,6 +43,20 @@
     .frame.visible{opacity:1;transform:translateY(0)}
     .frame:hover{transform:translateY(-5px) scale(1.02);box-shadow:0 10px 22px rgba(0,0,0,0.15)}
     .frame img,.frame video{width:100%;height:220px;object-fit:cover;border-radius:10px}
+    .frame.featured{
+      grid-column:span 2;
+      position:relative;
+      animation:glow 3s ease-in-out infinite alternate;
+    }
+    .frame.featured video{
+      height:320px;
+      border-radius:12px;
+      object-fit:cover;
+    }
+    @keyframes glow{
+      0%{box-shadow:0 0 12px rgba(255,182,193,0.3);}
+      100%{box-shadow:0 0 26px rgba(255,105,180,0.6);}
+    }
     .letter,.player,.videos{background:rgba(255,255,255,0.9);padding:18px;border-radius:16px;box-shadow:0 6px 18px rgba(0,0,0,0.1)}
     .letter h2{margin:0 0 8px;color:var(--accent)}
     .letter .body{white-space:pre-wrap;line-height:1.6;color:#333;font-size:15px}
@@ -214,17 +228,16 @@ Your silly Dudu/Bubu 🐻🐰
     audio.addEventListener('ended',()=>{loadTrack(current+1);audio.play();});
     loadTrack(0);
 
-    // --- Videos section (add your own file names)
+    // --- Videos section (9 videos, last one larger and autoplay)
     const videoGallery=document.getElementById('videoGallery');
-    const videoFiles=['vid1.mp4','vid2.mp4','vid3.mp4']; // add more if needed
-    videoFiles.forEach(v=>{
+    for(let i=1;i<=9;i++){
       const f=document.createElement('div');
-      f.className='frame';
+      f.className='frame'+(i===9?' featured':'');
       f.dataset.type='video';
-      f.dataset.src=`videos/${v}`;
-      f.innerHTML=`<video src="videos/${v}" muted></video>`;
+      f.dataset.src=`videos/vid${i}.mp4`;
+      f.innerHTML=`<video src="videos/vid${i}.mp4" muted ${i===9?'autoplay loop':''} playsinline></video>`;
       videoGallery.appendChild(f);
-    });
+    }
     videoGallery.addEventListener('click',e=>{
       const f=e.target.closest('.frame');
       if(f)openFrame(f);
