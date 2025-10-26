@@ -1,250 +1,270 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Dudu & Bubu Anniversary Gift</title>
-<style>
-  :root {
-    --bg: #fff8f8;
-    --panel: #ffffffcc;
-    --accent: #f58ea8;
-    --shadow: rgba(0, 0, 0, 0.1);
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Poppins', 'Comic Sans MS', cursive, sans-serif;
-    background: var(--bg) url('background1.png') center/cover fixed;
-    color: #333;
-    line-height: 1.5;
-  }
-  header {
-    text-align: center;
-    padding: 40px 20px;
-  }
-  header h1 {
-    font-size: clamp(24px, 5vw, 38px);
-    color: #fff;
-    text-shadow: 0 3px 8px rgba(0,0,0,0.2);
-  }
-  header p {
-    font-size: 18px;
-    color: #fff;
-    opacity: 0.9;
-  }
-
-  .container {
-    max-width: 1100px;
-    margin: auto;
-    padding: 20px;
-  }
-
-  /* Photo frames */
-  .frames {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-    gap: 14px;
-  }
-  .frame {
-    background: var(--panel);
-    border-radius: 18px;
-    padding: 10px;
-    box-shadow: 0 4px 10px var(--shadow);
-    overflow: hidden;
-    cursor: pointer;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-  }
-  .frame:hover {
-    transform: scale(1.03);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-  }
-  .frame img, .frame video {
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
-    border-radius: 12px;
-    border: 3px solid #fbd5e3;
-  }
-  .frame.featured {
-    grid-column: span 2;
-  }
-  .frame.featured video {
-    height: 320px;
-    border: 3px solid #f58ea8;
-    box-shadow: 0 0 20px rgba(245, 142, 168, 0.3);
-  }
-
-  /* Sections */
-  .letter, .player, .videos {
-    background: var(--panel);
-    padding: 20px;
-    border-radius: 16px;
-    margin: 20px 0;
-    box-shadow: 0 6px 18px var(--shadow);
-  }
-
-  h2, h3 {
-    margin-bottom: 10px;
-    color: #f58ea8;
-  }
-
-  /* Modal */
-  .modal {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.75);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity .2s;
-    z-index: 99;
-  }
-  .modal.open {
-    opacity: 1;
-    pointer-events: all;
-  }
-  .modal .card {
-    background: #111;
-    border-radius: 12px;
-    max-width: 90%;
-    max-height: 90%;
-    padding: 12px;
-  }
-  .modal img, .modal video {
-    width: 100%;
-    border-radius: 10px;
-  }
-  .close {
-    position: absolute;
-    top: 18px;
-    right: 20px;
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 22px;
-    cursor: pointer;
-  }
-
-  footer {
-    text-align: center;
-    padding: 20px;
-    color: #fff;
-    background: #f58ea8;
-    border-top-left-radius: 14px;
-    border-top-right-radius: 14px;
-  }
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Dudu & Bubu Anniversary Gift</title>
+  <style>
+    :root{
+      --bg:#fff8f8;
+      --panel:#fff;
+      --accent:#f58ea8;
+      --muted:#7a6c6c;
+      --bubu:#fbd5e3;
+      --dudu:#a4b9e7;
+    }
+    *{box-sizing:border-box}
+    body{
+      font-family:'Poppins','Comic Sans MS',cursive,sans-serif;
+      margin:0;
+      background:url('background1.png') center center / cover no-repeat fixed;
+      color:#333;
+    }
+    header{padding:28px 20px;text-align:center}
+    h1{margin:0;font-size:clamp(22px,4vw,36px);letter-spacing:0.5px;color:#fff;text-shadow:0 2px 4px rgba(0,0,0,0.2)}
+    p.lead{margin:6px 0 0;color:#fefefe;font-size:16px}
+    .container{max-width:1100px;margin:24px auto;padding:16px}
+    .grid{display:grid;gap:16px}
+    .top{display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start}
+    @media(max-width:900px){.top{grid-template-columns:1fr}}
+    .frames{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+    .frame{
+      background:var(--panel);
+      padding:8px;
+      border-radius:14px;
+      box-shadow:0 6px 18px rgba(0,0,0,0.1);
+      cursor:pointer;
+      overflow:hidden;
+      transition:transform .2s,box-shadow .2s,opacity .6s ease-out;
+      position:relative;
+      opacity:0;
+      transform:translateY(20px);
+    }
+    .frame.visible{opacity:1;transform:translateY(0)}
+    .frame:hover{transform:translateY(-5px) scale(1.02);box-shadow:0 10px 22px rgba(0,0,0,0.15)}
+    .frame img, .frame video{
+      width:100%;
+      height:220px;
+      object-fit:cover;
+      border-radius:12px;
+      border:3px solid #fbd5e3;
+      display:block;
+      background-color:#f9e8ec;
+    }
+    .frame.featured{
+      grid-column:span 2;
+    }
+    .frame.featured video{
+      height:320px;
+      border:3px solid #f58ea8;
+      box-shadow:0 0 20px rgba(245,142,168,0.3);
+      display:block;
+      background-color:#f9e8ec;
+    }
+    .letter,.player,.videos{
+      background:rgba(255,255,255,0.9);
+      padding:18px;
+      border-radius:16px;
+      box-shadow:0 6px 18px rgba(0,0,0,0.1);
+    }
+    .letter h2{margin:0 0 8px;color:var(--accent)}
+    .letter .body{white-space:pre-wrap;line-height:1.6;color:#333;font-size:15px}
+    .actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+    .btn{
+      background:var(--accent);
+      color:white;
+      padding:10px 14px;
+      border-radius:10px;
+      border:0;
+      cursor:pointer;
+      font-weight:600;
+      transition:background .2s,transform .1s
+    }
+    .btn:hover{background:#e27691;transform:translateY(-2px)}
+    .btn.ghost{background:transparent;color:var(--accent);border:2px solid var(--accent)}
+    .track{display:flex;align-items:center;gap:10px;padding:8px;border-radius:10px}
+    .track:hover{background:var(--bubu)}
+    .track .meta{flex:1}
+    .modal{
+      position:fixed;inset:0;background:rgba(0,0,0,0.7);
+      display:flex;align-items:center;justify-content:center;
+      z-index:60;opacity:0;pointer-events:none;transition:opacity .18s
+    }
+    .modal.open{opacity:1;pointer-events:all}
+    .modal .card{max-width:1100px;width:94%;background:#111;border-radius:12px;padding:12px}
+    .modal img,.modal video{width:100%;height:auto;border-radius:8px}
+    .close{position:absolute;top:18px;right:20px;background:transparent;border:0;color:#fff;font-size:22px;cursor:pointer}
+    footer{padding:20px;text-align:center;color:#fff;font-size:14px}
+  </style>
 </head>
 <body>
-<header>
-  <h1>Happy Anniversary Baby 💖</h1>
-  <p>Our Dudu & Bubu Memories Forever</p>
-</header>
+  <header>
+    <h1>Happy Anniversary Baby!!!!</h1>
+    <p class="lead">Our Memories 💕</p>
+  </header>
 
-<main class="container">
-  <!-- Photos -->
-  <section class="photos">
-    <h2>📸 Photo Gallery</h2>
-    <div class="frames" id="photoGallery"></div>
-  </section>
+  <main class="container">
+    <section class="top grid">
+      <div>
+        <div class="frames" id="gallery"></div>
+        <div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap">
+          <button class="btn" id="openSlideshow">Start Slideshow</button>
+          <button class="btn ghost" id="downloadAll">Download Album</button>
+        </div>
+      </div>
 
-  <!-- Songs -->
-  <section class="player">
-    <h2>🎵 Our Songs</h2>
-    <audio controls autoplay loop style="width:100%;border-radius:10px;">
-      <source src="songs/song1.mp3" type="audio/mpeg">
-    </audio>
-  </section>
+      <aside style="display:flex;flex-direction:column;gap:12px">
+        <div class="letter">
+          <h2>Letter for My Dudu / Bubu</h2>
+          <div class="body" id="letterText">
+Hey my love 💖,
 
-  <!-- Videos -->
-  <section class="videos">
-    <h2>🎬 Our Video Moments</h2>
-    <div class="frames" id="videoGallery"></div>
-  </section>
+Every day with you feels like the sweetest comic strip — funny, soft, and full of hugs. You are my safe place, my Dudu/Bubu, and my forever favorite.
 
-  <!-- Letter -->
-  <section class="letter">
-    <h2>💌 My Letter To You</h2>
-    <p>
-      To my favorite person,<br><br>
-      Every single moment with you feels like sunshine in my heart.  
-      Through laughter, late-night talks, and quiet moments, you’ve made my world feel softer and brighter.  
-      I made this little website so we can relive the smiles, the memories, and the love we’ve shared.  
-      <br><br>
-      Thank you for being my home, my comfort, and my adventure.  
-      I love you endlessly, my Dudu. 💕  
-      <br><br>
-      – Bubu 🧸
-    </p>
-  </section>
+Even when life gets silly or hard, we always find our way back to laughter and snacks. Thank you for being my best friend and my heart’s home.
 
-  <!-- Lightbox -->
-  <div class="modal" id="lightbox">
-    <button class="close" id="closeModal">✕</button>
-    <div class="card"><div id="mediaHolder"></div></div>
-  </div>
-</main>
+With love,
+Your silly Dudu/Bubu 🐻🐰
+          </div>
+          <div class="actions">
+            <button class="btn" id="printLetter">Print / Save</button>
+            <button class="btn ghost" id="editLetter">Edit</button>
+          </div>
+        </div>
 
-<footer>Made with love by Dudu & Bubu 💕</footer>
+        <div class="player">
+          <h3 style="margin:0 0 8px">Our Song Album 🎵</h3>
+          <div id="playlist">
+            <div class="track" data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+              <div class="meta"><strong>Dudu & Bubu Theme</strong><div style="font-size:12px;color:var(--muted)">Cute and cozy</div></div>
+              <div><button class="btn small" data-action="play">Play</button></div>
+            </div>
+            <div class="track" data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3">
+              <div class="meta"><strong>Our Lazy Sunday</strong><div style="font-size:12px;color:var(--muted)">Warm coffee vibes</div></div>
+              <div><button class="btn small" data-action="play">Play</button></div>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;margin-top:10px">
+            <button class="btn" id="prevTrack">Prev</button>
+            <button class="btn" id="togglePlay">Play</button>
+            <button class="btn" id="nextTrack">Next</button>
+          </div>
+        </div>
 
-<script>
-  const lightbox = document.getElementById('lightbox');
-  const mediaHolder = document.getElementById('mediaHolder');
-  const closeModal = document.getElementById('closeModal');
+        <div class="videos">
+          <h3 style="margin:0 0 8px">Our Video Moments 🎬</h3>
+          <div class="frames" id="videoGallery"></div>
+        </div>
+      </aside>
+    </section>
 
-  function openFrame(f) {
-    const type = f.dataset.type, src = f.dataset.src;
-    mediaHolder.innerHTML = '';
-    if (type === 'photo') {
-      const img = document.createElement('img');
-      img.src = src;
-      mediaHolder.appendChild(img);
-    } else if (type === 'video') {
-      const vid = document.createElement('video');
-      vid.src = src;
-      vid.controls = true;
-      vid.autoplay = true;
-      mediaHolder.appendChild(vid);
+    <div class="modal" id="lightbox" aria-hidden="true">
+      <button class="close" id="closeModal">✕</button>
+      <div class="card" role="dialog" aria-modal="true">
+        <div id="mediaHolder"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer>Made with love by Dudu & Bubu 💕</footer>
+
+  <script>
+    const gallery=document.getElementById('gallery');
+    const lightbox=document.getElementById('lightbox');
+    const mediaHolder=document.getElementById('mediaHolder');
+    const closeModal=document.getElementById('closeModal');
+
+    // --- Load pictures automatically (1–156.png, 157–366.jfif)
+    for(let i=1;i<=366;i++){
+      const frame=document.createElement('div');
+      frame.className='frame';
+      const file=i<=156?`images/${i}.png`:`images/${i}.jfif`;
+      frame.dataset.type='image';
+      frame.dataset.src=file;
+      frame.innerHTML=`<img src="${file}" alt="Memory ${i}">`;
+      gallery.appendChild(frame);
     }
-    lightbox.classList.add('open');
-  }
 
-  closeModal.onclick = () => {
-    lightbox.classList.remove('open');
-    mediaHolder.innerHTML = '';
-  };
+    // --- Fade-in animation
+    const observer=new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },{threshold:0.2});
+    document.querySelectorAll('.frame').forEach(f=>observer.observe(f));
 
-  // --- Load Photos (1–156 .png, 157–366 .jfif)
-  const photoGallery = document.getElementById('photoGallery');
-  for (let i = 1; i <= 366; i++) {
-    const f = document.createElement('div');
-    f.className = 'frame';
-    f.dataset.type = 'photo';
-    f.dataset.src = i <= 156 ? `images/${i}.png` : `images/${i}.jfif`;
-    f.innerHTML = `<img src="${i <= 156 ? `images/${i}.png` : `images/${i}.jfif`}" alt="Memory ${i}">`;
-    photoGallery.appendChild(f);
-  }
-  photoGallery.addEventListener('click', e => {
-    const f = e.target.closest('.frame');
-    if (f) openFrame(f);
-  });
+    // --- Lightbox
+    gallery.addEventListener('click',e=>{
+      const f=e.target.closest('.frame');if(!f)return;
+      openFrame(f);
+    });
+    function openFrame(frame){
+      const type=frame.dataset.type,src=frame.dataset.src;
+      mediaHolder.innerHTML='';
+      if(type==='image'){const img=document.createElement('img');img.src=src;mediaHolder.appendChild(img);}
+      if(type==='video'){const vid=document.createElement('video');vid.src=src;vid.controls=true;vid.autoplay=true;mediaHolder.appendChild(vid);}
+      lightbox.classList.add('open');lightbox.setAttribute('aria-hidden','false');
+    }
+    closeModal.addEventListener('click',()=>{lightbox.classList.remove('open');lightbox.setAttribute('aria-hidden','true');mediaHolder.innerHTML='';});
 
-  // --- Load Videos (9 total, last one featured)
-  const videoGallery = document.getElementById('videoGallery');
-  for (let i = 1; i <= 9; i++) {
-    const f = document.createElement('div');
-    f.className = 'frame' + (i === 9 ? ' featured' : '');
-    f.dataset.type = 'video';
-    f.dataset.src = `videos/vid${i}.mp4`;
-    f.innerHTML = `<video src="videos/vid${i}.mp4" muted ${i===9 ? 'autoplay' : ''} loop playsinline></video>`;
-    videoGallery.appendChild(f);
-  }
-  videoGallery.addEventListener('click', e => {
-    const f = e.target.closest('.frame');
-    if (f) openFrame(f);
-  });
-</script>
+    // --- Slideshow
+    document.getElementById('openSlideshow').addEventListener('click',()=>{
+      const frames=Array.from(document.querySelectorAll('#gallery .frame'));
+      let idx=0;
+      function showNext(){
+        if(idx>=frames.length)return;
+        openFrame(frames[idx]);
+        const cb=()=>{idx++;closeModal.click();if(idx<frames.length)setTimeout(showNext,700);}
+        setTimeout(cb,1600);
+      }
+      showNext();
+    });
+
+    // --- Letter
+    const printLetter=document.getElementById('printLetter');
+    const editLetter=document.getElementById('editLetter');
+    const letterText=document.getElementById('letterText');
+    printLetter.addEventListener('click',()=>{
+      const w=window.open('','_blank');
+      w.document.write('<html><head><title>Letter</title></head><body style="font-family:Poppins;padding:24px;">'+letterText.innerHTML+'</body></html>');
+      w.document.close();w.print();
+    });
+    editLetter.addEventListener('click',()=>{
+      const t=prompt('Edit your letter',letterText.innerText);
+      if(t!==null)letterText.innerText=t;
+    });
+
+    // --- Music Player
+    const audio=new Audio();
+    const tracks=Array.from(document.querySelectorAll('.track'));
+    let current=0;
+    function loadTrack(i){current=(i+tracks.length)%tracks.length;audio.src=tracks[current].dataset.src;highlight();}
+    function highlight(){tracks.forEach((tr,idx)=>tr.style.background=idx===current?'#ffe5ec':'transparent');}
+    tracks.forEach((tr,idx)=>tr.querySelector('button').addEventListener('click',()=>{loadTrack(idx);audio.play();document.getElementById('togglePlay').innerText='Pause';}));
+    document.getElementById('togglePlay').addEventListener('click',function(){if(audio.paused){audio.play();this.innerText='Pause';}else{audio.pause();this.innerText='Play';}});
+    document.getElementById('prevTrack').addEventListener('click',()=>{loadTrack(current-1);audio.play();});
+    document.getElementById('nextTrack').addEventListener('click',()=>{loadTrack(current+1);audio.play();});
+    audio.addEventListener('ended',()=>{loadTrack(current+1);audio.play();});
+    loadTrack(0);
+
+    // --- Videos section (9 videos, last one larger & autoplay)
+    const videoGallery=document.getElementById('videoGallery');
+    const totalVideos=9;
+    for(let i=1;i<=totalVideos;i++){
+      const f=document.createElement('div');
+      f.className='frame'+(i===9?' featured':'');
+      f.dataset.type='video';
+      f.dataset.src=`videos/vid${i}.mp4`;
+      f.innerHTML=`<video src="videos/vid${i}.mp4" muted loop playsinline preload="metadata" ${i===9?'autoplay':''}></video>`;
+      videoGallery.appendChild(f);
+    }
+    videoGallery.addEventListener('click',e=>{
+      const f=e.target.closest('.frame');
+      if(f)openFrame(f);
+    });
+  </script>
 </body>
 </html>
