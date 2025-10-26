@@ -15,26 +15,19 @@
     }
     *{box-sizing:border-box}
     body{
-      font-family:'Poppins', 'Comic Sans MS', cursive, sans-serif;
+      font-family:'Poppins','Comic Sans MS',cursive,sans-serif;
       margin:0;
-      background: url('background1.png') center center / cover no-repeat fixed;
+      background:url('background1.png') center center / cover no-repeat fixed;
       color:#333;
     }
     header{padding:28px 20px;text-align:center}
     h1{margin:0;font-size:clamp(22px,4vw,36px);letter-spacing:0.5px;color:#fff;text-shadow:0 2px 4px rgba(0,0,0,0.2)}
     p.lead{margin:6px 0 0;color:#fefefe;font-size:16px}
-
     .container{max-width:1100px;margin:24px auto;padding:16px}
     .grid{display:grid;gap:16px}
     .top{display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start}
-    @media (max-width:900px){.top{grid-template-columns:1fr}}
-
-    .frames{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-      gap:14px;
-    }
-
+    @media(max-width:900px){.top{grid-template-columns:1fr}}
+    .frames{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
     .frame{
       background:var(--panel);
       padding:8px;
@@ -47,55 +40,37 @@
       opacity:0;
       transform:translateY(20px);
     }
-    .frame.visible{
-      opacity:1;
-      transform:translateY(0);
-    }
-    .frame:hover{
-      transform:translateY(-5px) scale(1.02);
-      box-shadow:0 10px 22px rgba(0,0,0,0.15);
-    }
-    .frame img,.frame video{
-      width:100%;
-      height:220px;
-      object-fit:cover;
-      border-radius:10px;
-    }
-
-    .letter{background:rgba(255,255,255,0.9);padding:18px;border-radius:16px;box-shadow:0 6px 18px rgba(0,0,0,0.1)}
+    .frame.visible{opacity:1;transform:translateY(0)}
+    .frame:hover{transform:translateY(-5px) scale(1.02);box-shadow:0 10px 22px rgba(0,0,0,0.15)}
+    .frame img,.frame video{width:100%;height:220px;object-fit:cover;border-radius:10px}
+    .letter,.player,.videos{background:rgba(255,255,255,0.9);padding:18px;border-radius:16px;box-shadow:0 6px 18px rgba(0,0,0,0.1)}
     .letter h2{margin:0 0 8px;color:var(--accent)}
     .letter .body{white-space:pre-wrap;line-height:1.6;color:#333;font-size:15px}
     .actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
     .btn{background:var(--accent);color:white;padding:10px 14px;border-radius:10px;border:0;cursor:pointer;font-weight:600;transition:background .2s,transform .1s}
     .btn:hover{background:#e27691;transform:translateY(-2px)}
     .btn.ghost{background:transparent;color:var(--accent);border:2px solid var(--accent)}
-
-    .player{background:rgba(255,255,255,0.9);padding:14px;border-radius:16px;box-shadow:0 6px 18px rgba(0,0,0,0.1)}
     .track{display:flex;align-items:center;gap:10px;padding:8px;border-radius:10px}
     .track:hover{background:var(--bubu)}
     .track .meta{flex:1}
-    .controls{display:flex;gap:8px;align-items:center}
-
     .modal{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;z-index:60;opacity:0;pointer-events:none;transition:opacity .18s}
     .modal.open{opacity:1;pointer-events:all}
     .modal .card{max-width:1100px;width:94%;background:#111;border-radius:12px;padding:12px}
     .modal img,.modal video{width:100%;height:auto;border-radius:8px}
     .close{position:absolute;top:18px;right:20px;background:transparent;border:0;color:#fff;font-size:22px;cursor:pointer}
-
     footer{padding:20px;text-align:center;color:#fff;font-size:14px}
   </style>
 </head>
 <body>
   <header>
     <h1>Happy Anniversary Baby!!!!</h1>
-    <p class="lead">Our memories &lt;3</p>
+    <p class="lead">Our Memories 💕</p>
   </header>
 
   <main class="container">
     <section class="top grid">
       <div>
         <div class="frames" id="gallery"></div>
-
         <div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap">
           <button class="btn" id="openSlideshow">Start Slideshow</button>
           <button class="btn ghost" id="downloadAll">Download Album</button>
@@ -126,19 +101,23 @@ Your silly Dudu/Bubu 🐻🐰
           <div id="playlist">
             <div class="track" data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
               <div class="meta"><strong>Dudu & Bubu Theme</strong><div style="font-size:12px;color:var(--muted)">Cute and cozy</div></div>
-              <div class="controls"><button class="btn small" data-action="play">Play</button></div>
+              <div><button class="btn small" data-action="play">Play</button></div>
             </div>
             <div class="track" data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3">
               <div class="meta"><strong>Our Lazy Sunday</strong><div style="font-size:12px;color:var(--muted)">Warm coffee vibes</div></div>
-              <div class="controls"><button class="btn small" data-action="play">Play</button></div>
+              <div><button class="btn small" data-action="play">Play</button></div>
             </div>
           </div>
-
           <div style="display:flex;gap:8px;align-items:center;margin-top:10px">
             <button class="btn" id="prevTrack">Prev</button>
             <button class="btn" id="togglePlay">Play</button>
             <button class="btn" id="nextTrack">Next</button>
           </div>
+        </div>
+
+        <div class="videos">
+          <h3 style="margin:0 0 8px">Our Video Moments 🎬</h3>
+          <div class="frames" id="videoGallery"></div>
         </div>
       </aside>
     </section>
@@ -151,30 +130,27 @@ Your silly Dudu/Bubu 🐻🐰
     </div>
   </main>
 
-  <footer>
-    Made with love by Dudu & Bubu 💕
-  </footer>
+  <footer>Made with love by Dudu & Bubu 💕</footer>
 
   <script>
-    const gallery = document.getElementById('gallery');
-    const lightbox = document.getElementById('lightbox');
-    const mediaHolder = document.getElementById('mediaHolder');
-    const closeModal = document.getElementById('closeModal');
+    const gallery=document.getElementById('gallery');
+    const lightbox=document.getElementById('lightbox');
+    const mediaHolder=document.getElementById('mediaHolder');
+    const closeModal=document.getElementById('closeModal');
 
-    // 🩷 AUTO-LOAD 256 PHOTOS
-    const totalImages = 256;
-    for (let i = 1; i <= totalImages; i++) {
-      const frame = document.createElement('div');
-      frame.className = 'frame';
-      frame.dataset.type = 'image';
-      frame.dataset.src = `images/${i}.png`;
-      frame.tabIndex = 0;
-      frame.innerHTML = `<img src="images/${i}.png" alt="Memory ${i}">`;
+    // --- Load pictures automatically (1–156.png, 157–366.jfif)
+    for(let i=1;i<=366;i++){
+      const frame=document.createElement('div');
+      frame.className='frame';
+      const file=i<=156?`images/${i}.png`:`images/${i}.jfif`;
+      frame.dataset.type='image';
+      frame.dataset.src=file;
+      frame.innerHTML=`<img src="${file}" alt="Memory ${i}">`;
       gallery.appendChild(frame);
     }
 
-    // 🩵 Fade-in animation using IntersectionObserver
-    const observer = new IntersectionObserver((entries)=>{
+    // --- Fade-in animation
+    const observer=new IntersectionObserver((entries)=>{
       entries.forEach(entry=>{
         if(entry.isIntersecting){
           entry.target.classList.add('visible');
@@ -184,69 +160,75 @@ Your silly Dudu/Bubu 🐻🐰
     },{threshold:0.2});
     document.querySelectorAll('.frame').forEach(f=>observer.observe(f));
 
-    // Lightbox logic
-    gallery.addEventListener('click', e => {
-      let f = e.target.closest('.frame');
-      if (!f) return;
+    // --- Lightbox
+    gallery.addEventListener('click',e=>{
+      const f=e.target.closest('.frame');if(!f)return;
       openFrame(f);
     });
-
     function openFrame(frame){
-      const type = frame.dataset.type;
-      const src = frame.dataset.src;
-      mediaHolder.innerHTML = '';
-      if(type==='image'){
-        const img = document.createElement('img'); img.src = src; mediaHolder.appendChild(img);
-      } else if(type==='video'){
-        const vid = document.createElement('video'); vid.src = src; vid.controls = true; vid.autoplay = true; mediaHolder.appendChild(vid);
-      }
-      lightbox.classList.add('open');
-      lightbox.setAttribute('aria-hidden','false');
+      const type=frame.dataset.type,src=frame.dataset.src;
+      mediaHolder.innerHTML='';
+      if(type==='image'){const img=document.createElement('img');img.src=src;mediaHolder.appendChild(img);}
+      if(type==='video'){const vid=document.createElement('video');vid.src=src;vid.controls=true;vid.autoplay=true;mediaHolder.appendChild(vid);}
+      lightbox.classList.add('open');lightbox.setAttribute('aria-hidden','false');
     }
     closeModal.addEventListener('click',()=>{lightbox.classList.remove('open');lightbox.setAttribute('aria-hidden','true');mediaHolder.innerHTML='';});
 
-    // Slideshow
-    document.getElementById('openSlideshow').addEventListener('click', ()=>{
-      const frames = Array.from(document.querySelectorAll('.frame'));
-      let idx = 0;
+    // --- Slideshow
+    document.getElementById('openSlideshow').addEventListener('click',()=>{
+      const frames=Array.from(document.querySelectorAll('.frame'));
+      let idx=0;
       function showNext(){
-        if(idx>=frames.length) return;
+        if(idx>=frames.length)return;
         openFrame(frames[idx]);
-        const cb = () => { idx++; closeModal.click(); if(idx<frames.length) setTimeout(showNext, 700); }
-        setTimeout(cb, 1600);
+        const cb=()=>{idx++;closeModal.click();if(idx<frames.length)setTimeout(showNext,700);}
+        setTimeout(cb,1600);
       }
       showNext();
     });
 
-    // Letter
+    // --- Letter
     const printLetter=document.getElementById('printLetter');
     const editLetter=document.getElementById('editLetter');
     const letterText=document.getElementById('letterText');
-
     printLetter.addEventListener('click',()=>{
       const w=window.open('','_blank');
       w.document.write('<html><head><title>Letter</title></head><body style="font-family:Poppins;padding:24px;">'+letterText.innerHTML+'</body></html>');
-      w.document.close();
-      w.print();
+      w.document.close();w.print();
     });
-
     editLetter.addEventListener('click',()=>{
-      const t=prompt('Edit the letter text',''+letterText.innerText);
-      if(t!==null) letterText.innerText=t;
+      const t=prompt('Edit your letter',letterText.innerText);
+      if(t!==null)letterText.innerText=t;
     });
 
-    // Music Player
+    // --- Music Player
     const audio=new Audio();
     const tracks=Array.from(document.querySelectorAll('.track'));
     let current=0;
     function loadTrack(i){current=(i+tracks.length)%tracks.length;audio.src=tracks[current].dataset.src;highlight();}
     function highlight(){tracks.forEach((tr,idx)=>tr.style.background=idx===current?'#ffe5ec':'transparent');}
-    tracks.forEach((tr,idx)=>{tr.querySelector('button').addEventListener('click',()=>{loadTrack(idx);audio.play();document.getElementById('togglePlay').innerText='Pause';});});
+    tracks.forEach((tr,idx)=>tr.querySelector('button').addEventListener('click',()=>{loadTrack(idx);audio.play();document.getElementById('togglePlay').innerText='Pause';}));
     document.getElementById('togglePlay').addEventListener('click',function(){if(audio.paused){audio.play();this.innerText='Pause';}else{audio.pause();this.innerText='Play';}});
-    document.getElementById('prevTrack').addEventListener('click',()=>{loadTrack(current-1);audio.play();document.getElementById('togglePlay').innerText='Pause';});
-    document.getElementById('nextTrack').addEventListener('click',()=>{loadTrack(current+1);audio.play();document.getElementById('togglePlay').innerText='Pause';});
+    document.getElementById('prevTrack').addEventListener('click',()=>{loadTrack(current-1);audio.play();});
+    document.getElementById('nextTrack').addEventListener('click',()=>{loadTrack(current+1);audio.play();});
     audio.addEventListener('ended',()=>{loadTrack(current+1);audio.play();});
     loadTrack(0);
+
+    // --- Videos section (add your own file names)
+    const videoGallery=document.getElementById('videoGallery');
+    const videoFiles=['vid1.mp4','vid2.mp4','vid3.mp4']; // add more if needed
+    videoFiles.forEach(v=>{
+      const f=document.createElement('div');
+      f.className='frame';
+      f.dataset.type='video';
+      f.dataset.src=`videos/${v}`;
+      f.innerHTML=`<video src="videos/${v}" muted></video>`;
+      videoGallery.appendChild(f);
+    });
+    videoGallery.addEventListener('click',e=>{
+      const f=e.target.closest('.frame');
+      if(f)openFrame(f);
+    });
   </script>
 </body>
 </html>
