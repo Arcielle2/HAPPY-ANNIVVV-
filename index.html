@@ -39,11 +39,19 @@
     padding: 20px;
   }
 
+  /* Centered section titles */
+  h2 {
+    text-align: center;
+    color: #f58ea8;
+    margin-bottom: 10px;
+  }
+
   /* Photo frames */
   .frames {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
     gap: 14px;
+    justify-items: center;
   }
   .frame {
     background: var(--panel);
@@ -82,12 +90,6 @@
     border-radius: 16px;
     margin: 20px 0;
     box-shadow: 0 6px 18px var(--shadow);
-  }
-
-  h2 {
-    text-align: center;
-    color: #f58ea8;
-    margin-bottom: 10px;
   }
 
   /* Modal */
@@ -146,7 +148,7 @@
   <!-- Songs -->
   <section class="player">
     <h2>🎵 Our Songs</h2>
-    <audio controls autoplay loop style="width:100%;border-radius:10px;">
+    <audio id="musicPlayer" controls autoplay loop style="width:100%;border-radius:10px;">
       <source src="songs/song1.mp3" type="audio/mpeg">
     </audio>
   </section>
@@ -197,6 +199,7 @@
       vid.src = src;
       vid.controls = true;
       vid.autoplay = true;
+      vid.muted = false;
       mediaHolder.appendChild(vid);
     }
     lightbox.classList.add('open');
@@ -214,7 +217,7 @@
     f.className = 'frame';
     f.dataset.type = 'photo';
     f.dataset.src = i <= 156 ? `images/${i}.png` : `images/${i}.jfif`;
-    f.innerHTML = `<img src="${i <= 156 ? `images/${i}.png` : `images/${i}.jfif`}" alt="Memory ${i}">`;
+    f.innerHTML = `<img src="${f.dataset.src}" alt="Memory ${i}">`;
     photoGallery.appendChild(f);
   }
   photoGallery.addEventListener('click', e => {
@@ -222,7 +225,7 @@
     if (f) openFrame(f);
   });
 
-  // --- Load Videos (9 total, all autoplay, muted + loop, last one featured)
+  // --- Load Videos (autoplay muted loop, last one featured)
   const videoGallery = document.getElementById('videoGallery');
   for (let i = 1; i <= 9; i++) {
     const f = document.createElement('div');
@@ -237,6 +240,23 @@
   videoGallery.addEventListener('click', e => {
     const f = e.target.closest('.frame');
     if (f) openFrame(f);
+  });
+
+  // --- Music Playlist (5 songs)
+  const songs = [
+    'songs/song1.mp3',
+    'songs/song2.mp3',
+    'songs/song3.mp3',
+    'songs/song4.mp3',
+    'songs/song5.mp3'
+  ];
+  const musicPlayer = document.getElementById('musicPlayer');
+  let currentSong = 0;
+
+  musicPlayer.addEventListener('ended', () => {
+    currentSong = (currentSong + 1) % songs.length;
+    musicPlayer.src = songs[currentSong];
+    musicPlayer.play();
   });
 </script>
 </body>
