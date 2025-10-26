@@ -1,269 +1,239 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Dudu & Bubu Anniversary Gift</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dudu & Bubu Anniversary 💖</title>
   <style>
-    :root{
-      --bg:#fff8f8;
-      --panel:#fff;
-      --accent:#f58ea8;
-      --muted:#7a6c6c;
-      --bubu:#fbd5e3;
-      --dudu:#a4b9e7;
+    body {
+      font-family: "Comic Sans MS", cursive;
+      margin: 0;
+      padding: 0;
+      background-color: #fef7fa;
+      color: #333;
+      text-align: center;
     }
-    *{box-sizing:border-box}
-    body{
-      font-family:'Poppins','Comic Sans MS',cursive,sans-serif;
-      margin:0;
-      background:url('background1.png') center center / cover no-repeat fixed;
-      color:#333;
+
+    header {
+      background-color: #ffdce5;
+      padding: 25px;
+      border-bottom: 3px solid #fbc4d4;
     }
-    header{padding:28px 20px;text-align:center}
-    h1{margin:0;font-size:clamp(22px,4vw,36px);letter-spacing:0.5px;color:#fff;text-shadow:0 2px 4px rgba(0,0,0,0.2)}
-    p.lead{margin:6px 0 0;color:#fefefe;font-size:16px}
-    .container{max-width:1100px;margin:24px auto;padding:16px}
-    .grid{display:grid;gap:16px}
-    .top{display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start}
-    @media(max-width:900px){.top{grid-template-columns:1fr}}
-    .frames{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
-    .frame{
-      background:var(--panel);
-      padding:8px;
-      border-radius:14px;
-      box-shadow:0 6px 18px rgba(0,0,0,0.1);
-      cursor:pointer;
-      overflow:hidden;
-      transition:transform .2s,box-shadow .2s,opacity .6s ease-out;
-      position:relative;
-      opacity:0;
-      transform:translateY(20px);
+
+    header h1 {
+      color: #ff6f91;
+      font-size: 2.2em;
+      margin: 0;
     }
-    .frame.visible{opacity:1;transform:translateY(0)}
-    .frame:hover{transform:translateY(-5px) scale(1.02);box-shadow:0 10px 22px rgba(0,0,0,0.15)}
-    .frame img, .frame video{
-      width:100%;
-      height:220px;
-      object-fit:cover;
-      border-radius:12px;
-      border:3px solid #fbd5e3;
-      display:block;
-      background-color:#f9e8ec;
+
+    section {
+      margin: 50px auto;
+      padding: 20px 10px;
+      max-width: 1200px;
     }
-    .frame.featured{
-      grid-column:span 2;
+
+    h2 {
+      color: #ff6f91;
+      font-size: 1.8em;
+      margin-bottom: 15px;
+      text-align: center;
+      position: relative;
     }
-    .frame.featured video{
-      height:320px;
-      border:3px solid #f58ea8;
-      box-shadow:0 0 20px rgba(245,142,168,0.3);
-      display:block;
-      background-color:#f9e8ec;
+
+    h2::after {
+      content: "";
+      display: block;
+      width: 80px;
+      height: 3px;
+      background-color: #ffc1d3;
+      margin: 8px auto 20px;
+      border-radius: 2px;
     }
-    .letter,.player,.videos{
-      background:rgba(255,255,255,0.9);
-      padding:18px;
-      border-radius:16px;
-      box-shadow:0 6px 18px rgba(0,0,0,0.1);
+
+    .frames {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 16px;
+      padding: 10px;
+      justify-items: center;
     }
-    .letter h2{margin:0 0 8px;color:var(--accent)}
-    .letter .body{white-space:pre-wrap;line-height:1.6;color:#333;font-size:15px}
-    .actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
-    .btn{
-      background:var(--accent);
-      color:white;
-      padding:10px 14px;
-      border-radius:10px;
-      border:0;
-      cursor:pointer;
-      font-weight:600;
-      transition:background .2s,transform .1s
+
+    .frame {
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-    .btn:hover{background:#e27691;transform:translateY(-2px)}
-    .btn.ghost{background:transparent;color:var(--accent);border:2px solid var(--accent)}
-    .track{display:flex;align-items:center;gap:10px;padding:8px;border-radius:10px}
-    .track:hover{background:var(--bubu)}
-    .track .meta{flex:1}
-    .modal{
-      position:fixed;inset:0;background:rgba(0,0,0,0.7);
-      display:flex;align-items:center;justify-content:center;
-      z-index:60;opacity:0;pointer-events:none;transition:opacity .18s
+
+    .frame:hover {
+      transform: scale(1.03);
+      box-shadow: 0 4px 15px rgba(255, 182, 193, 0.5);
     }
-    .modal.open{opacity:1;pointer-events:all}
-    .modal .card{max-width:1100px;width:94%;background:#111;border-radius:12px;padding:12px}
-    .modal img,.modal video{width:100%;height:auto;border-radius:8px}
-    .close{position:absolute;top:18px;right:20px;background:transparent;border:0;color:#fff;font-size:22px;cursor:pointer}
-    footer{padding:20px;text-align:center;color:#fff;font-size:14px}
+
+    .frame img,
+    .frame video {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 3px solid #fbd5e3;
+      display: block;
+      background-color: #f9e8ec;
+    }
+
+    .frame.featured {
+      grid-column: span 2;
+    }
+
+    .frame.featured video {
+      height: 320px;
+      border: 3px solid #f58ea8;
+      box-shadow: 0 0 20px rgba(245, 142, 168, 0.3);
+    }
+
+    #music audio {
+      margin: 10px;
+      width: 250px;
+    }
+
+    /* Letter section */
+    .letter {
+      max-width: 700px;
+      margin: auto;
+      padding: 25px;
+      background: #fff4f8;
+      border-radius: 15px;
+      box-shadow: 0 2px 10px rgba(255,182,193,0.4);
+      line-height: 1.6;
+    }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 999;
+    }
+
+    .lightbox.show {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .lightbox img, .lightbox video {
+      max-width: 90%;
+      max-height: 80%;
+      border-radius: 15px;
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1>Happy Anniversary Baby!!!!</h1>
-    <p class="lead">Our Memories 💕</p>
+    <h1>💞 Happy Anniversary, My Dudu & Bubu 💞</h1>
   </header>
 
-  <main class="container">
-    <section class="top grid">
-      <div>
-        <div class="frames" id="gallery"></div>
-        <div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap">
-          <button class="btn" id="openSlideshow">Start Slideshow</button>
-          <button class="btn ghost" id="downloadAll">Download Album</button>
-        </div>
-      </div>
+  <section>
+    <h2>Our Photo Memories 📸</h2>
+    <div class="frames" id="gallery"></div>
+  </section>
 
-      <aside style="display:flex;flex-direction:column;gap:12px">
-        <div class="letter">
-          <h2>Letter for My Dudu / Bubu</h2>
-          <div class="body" id="letterText">
-Hey my love 💖,
-
-Every day with you feels like the sweetest comic strip — funny, soft, and full of hugs. You are my safe place, my Dudu/Bubu, and my forever favorite.
-
-Even when life gets silly or hard, we always find our way back to laughter and snacks. Thank you for being my best friend and my heart’s home.
-
-With love,
-Your silly Dudu/Bubu 🐻🐰
-          </div>
-          <div class="actions">
-            <button class="btn" id="printLetter">Print / Save</button>
-            <button class="btn ghost" id="editLetter">Edit</button>
-          </div>
-        </div>
-
-        <div class="player">
-          <h3 style="margin:0 0 8px">Our Song Album 🎵</h3>
-          <div id="playlist">
-            <div class="track" data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
-              <div class="meta"><strong>Dudu & Bubu Theme</strong><div style="font-size:12px;color:var(--muted)">Cute and cozy</div></div>
-              <div><button class="btn small" data-action="play">Play</button></div>
-            </div>
-            <div class="track" data-src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3">
-              <div class="meta"><strong>Our Lazy Sunday</strong><div style="font-size:12px;color:var(--muted)">Warm coffee vibes</div></div>
-              <div><button class="btn small" data-action="play">Play</button></div>
-            </div>
-          </div>
-          <div style="display:flex;gap:8px;align-items:center;margin-top:10px">
-            <button class="btn" id="prevTrack">Prev</button>
-            <button class="btn" id="togglePlay">Play</button>
-            <button class="btn" id="nextTrack">Next</button>
-          </div>
-        </div>
-
-        <div class="videos">
-          <h3 style="margin:0 0 8px">Our Video Moments 🎬</h3>
-          <div class="frames" id="videoGallery"></div>
-        </div>
-      </aside>
-    </section>
-
-    <div class="modal" id="lightbox" aria-hidden="true">
-      <button class="close" id="closeModal">✕</button>
-      <div class="card" role="dialog" aria-modal="true">
-        <div id="mediaHolder"></div>
-      </div>
+  <section>
+    <h2>Our Favorite Songs 🎶</h2>
+    <div id="music">
+      <audio controls src="songs/song1.mp3"></audio>
+      <audio controls src="songs/song2.mp3"></audio>
+      <audio controls src="songs/song3.mp3"></audio>
     </div>
-  </main>
+  </section>
 
-  <footer>Made with love by Dudu & Bubu 💕</footer>
+  <section>
+    <h2>Our Video Moments 🎬</h2>
+    <div class="frames" id="videoGallery"></div>
+  </section>
+
+  <section>
+    <h2>My Letter to You 💌</h2>
+    <div class="letter">
+      To my dearest love, thank you for all the laughter, the hugs, and the memories.  
+      Every photo and video here is a reminder of our moments together — the little things, the smiles, the warmth.  
+      Here’s to many more years of Dudu & Bubu adventures. 💕
+    </div>
+  </section>
+
+  <div class="lightbox" id="lightbox">
+    <img src="" alt="">
+    <video src="" controls></video>
+  </div>
 
   <script>
-    const gallery=document.getElementById('gallery');
-    const lightbox=document.getElementById('lightbox');
-    const mediaHolder=document.getElementById('mediaHolder');
-    const closeModal=document.getElementById('closeModal');
+    // === Photo Gallery ===
+    const totalImages = 366;
+    const galleryContainer = document.getElementById('gallery');
 
-    // --- Load pictures automatically (1–156.png, 157–366.jfif)
-    for(let i=1;i<=366;i++){
-      const frame=document.createElement('div');
-      frame.className='frame';
-      const file=i<=156?`images/${i}.png`:`images/${i}.jfif`;
-      frame.dataset.type='image';
-      frame.dataset.src=file;
-      frame.innerHTML=`<img src="${file}" alt="Memory ${i}">`;
-      gallery.appendChild(frame);
+    for (let i = 1; i <= totalImages; i++) {
+      const ext = i <= 156 ? 'png' : 'jfif';
+      const frame = document.createElement('div');
+      frame.className = 'frame';
+      frame.dataset.type = 'image';
+      frame.dataset.src = `images/${i}.${ext}`;
+      frame.innerHTML = `<img src="images/${i}.${ext}" alt="Memory ${i}">`;
+      galleryContainer.appendChild(frame);
     }
 
-    // --- Fade-in animation
-    const observer=new IntersectionObserver((entries)=>{
-      entries.forEach(entry=>{
-        if(entry.isIntersecting){
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    },{threshold:0.2});
-    document.querySelectorAll('.frame').forEach(f=>observer.observe(f));
+    // === Video Gallery ===
+    const videoGallery = document.getElementById('videoGallery');
+    const totalVideos = 9;
 
-    // --- Lightbox
-    gallery.addEventListener('click',e=>{
-      const f=e.target.closest('.frame');if(!f)return;
-      openFrame(f);
-    });
-    function openFrame(frame){
-      const type=frame.dataset.type,src=frame.dataset.src;
-      mediaHolder.innerHTML='';
-      if(type==='image'){const img=document.createElement('img');img.src=src;mediaHolder.appendChild(img);}
-      if(type==='video'){const vid=document.createElement('video');vid.src=src;vid.controls=true;vid.autoplay=true;mediaHolder.appendChild(vid);}
-      lightbox.classList.add('open');lightbox.setAttribute('aria-hidden','false');
-    }
-    closeModal.addEventListener('click',()=>{lightbox.classList.remove('open');lightbox.setAttribute('aria-hidden','true');mediaHolder.innerHTML='';});
-
-    // --- Slideshow
-    document.getElementById('openSlideshow').addEventListener('click',()=>{
-      const frames=Array.from(document.querySelectorAll('#gallery .frame'));
-      let idx=0;
-      function showNext(){
-        if(idx>=frames.length)return;
-        openFrame(frames[idx]);
-        const cb=()=>{idx++;closeModal.click();if(idx<frames.length)setTimeout(showNext,700);}
-        setTimeout(cb,1600);
-      }
-      showNext();
-    });
-
-    // --- Letter
-    const printLetter=document.getElementById('printLetter');
-    const editLetter=document.getElementById('editLetter');
-    const letterText=document.getElementById('letterText');
-    printLetter.addEventListener('click',()=>{
-      const w=window.open('','_blank');
-      w.document.write('<html><head><title>Letter</title></head><body style="font-family:Poppins;padding:24px;">'+letterText.innerHTML+'</body></html>');
-      w.document.close();w.print();
-    });
-    editLetter.addEventListener('click',()=>{
-      const t=prompt('Edit your letter',letterText.innerText);
-      if(t!==null)letterText.innerText=t;
-    });
-
-    // --- Music Player
-    const audio=new Audio();
-    const tracks=Array.from(document.querySelectorAll('.track'));
-    let current=0;
-    function loadTrack(i){current=(i+tracks.length)%tracks.length;audio.src=tracks[current].dataset.src;highlight();}
-    function highlight(){tracks.forEach((tr,idx)=>tr.style.background=idx===current?'#ffe5ec':'transparent');}
-    tracks.forEach((tr,idx)=>tr.querySelector('button').addEventListener('click',()=>{loadTrack(idx);audio.play();document.getElementById('togglePlay').innerText='Pause';}));
-    document.getElementById('togglePlay').addEventListener('click',function(){if(audio.paused){audio.play();this.innerText='Pause';}else{audio.pause();this.innerText='Play';}});
-    document.getElementById('prevTrack').addEventListener('click',()=>{loadTrack(current-1);audio.play();});
-    document.getElementById('nextTrack').addEventListener('click',()=>{loadTrack(current+1);audio.play();});
-    audio.addEventListener('ended',()=>{loadTrack(current+1);audio.play();});
-    loadTrack(0);
-
-    // --- Videos section (9 videos, last one larger & autoplay)
-    const videoGallery=document.getElementById('videoGallery');
-    const totalVideos=9;
-    for(let i=1;i<=totalVideos;i++){
-      const f=document.createElement('div');
-      f.className='frame'+(i===9?' featured':'');
-      f.dataset.type='video';
-      f.dataset.src=`videos/vid${i}.mp4`;
-      f.innerHTML=`<video src="videos/vid${i}.mp4" muted loop playsinline preload="metadata" ${i===9?'autoplay':''}></video>`;
+    for (let i = 1; i <= totalVideos; i++) {
+      const f = document.createElement('div');
+      f.className = 'frame' + (i === 9 ? ' featured' : '');
+      f.dataset.type = 'video';
+      f.dataset.src = `videos/vid${i}.mp4`;
+      f.innerHTML = `
+        <video src="videos/vid${i}.mp4" muted autoplay loop playsinline preload="metadata"></video>
+      `;
       videoGallery.appendChild(f);
     }
-    videoGallery.addEventListener('click',e=>{
-      const f=e.target.closest('.frame');
-      if(f)openFrame(f);
+
+    // === Lightbox (view larger) ===
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = lightbox.querySelector('img');
+    const lbVid = lightbox.querySelector('video');
+
+    function openFrame(frame) {
+      const type = frame.dataset.type;
+      const src = frame.dataset.src;
+      if (type === 'image') {
+        lbVid.style.display = 'none';
+        lbImg.style.display = 'block';
+        lbImg.src = src;
+      } else {
+        lbImg.style.display = 'none';
+        lbVid.style.display = 'block';
+        lbVid.src = src;
+        lbVid.play();
+      }
+      lightbox.classList.add('show');
+    }
+
+    document.getElementById('gallery').addEventListener('click', e => {
+      const f = e.target.closest('.frame');
+      if (f) openFrame(f);
+    });
+
+    document.getElementById('videoGallery').addEventListener('click', e => {
+      const f = e.target.closest('.frame');
+      if (f) openFrame(f);
+    });
+
+    lightbox.addEventListener('click', () => {
+      lightbox.classList.remove('show');
+      lbVid.pause();
     });
   </script>
 </body>
