@@ -45,11 +45,11 @@
     margin-bottom: 10px;
   }
 
-  /* Photo frames */
+  /* Photo & Video Frames */
   .frames {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-    gap: 14px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
     justify-items: center;
   }
   .frame {
@@ -60,6 +60,8 @@
     overflow: hidden;
     cursor: pointer;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
+    width: 100%;
+    max-width: 260px;
   }
   .frame:hover {
     transform: scale(1.03);
@@ -67,22 +69,14 @@
   }
   .frame img, .frame video {
     width: 100%;
-    height: 220px;
+    height: 230px;
     object-fit: cover;
     border-radius: 12px;
     border: 3px solid #fbd5e3;
     display: block;
   }
-  .frame.featured {
-    grid-column: span 2;
-  }
-  .frame.featured video {
-    height: 320px;
-    border: 3px solid #f58ea8;
-    box-shadow: 0 0 20px rgba(245, 142, 168, 0.3);
-  }
 
-  .letter, .player, .videos {
+  .letter, .player, .videos, .vouchers {
     background: var(--panel);
     padding: 20px;
     border-radius: 16px;
@@ -129,84 +123,71 @@
     cursor: pointer;
   }
 
-  /* Envelopes */
-  .vouchers {
-    text-align: center;
-    margin-top: 50px;
-  }
+  /* Flip Vouchers */
   .vouchers h2 {
     margin-bottom: 20px;
   }
-  .envelopes {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 25px;
+  .voucher-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 18px;
+    justify-items: center;
   }
-  .envelope {
-    position: relative;
+  .voucher {
     width: 180px;
     height: 110px;
-    background: #f58ea8;
-    border-radius: 6px;
+    perspective: 1000px;
     cursor: pointer;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-    transition: transform 0.3s ease;
   }
-  .envelope:hover {
-    transform: scale(1.05);
+  .voucher .inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.7s;
+    transform-style: preserve-3d;
   }
-  .flap {
+  .voucher.flipped .inner {
+    transform: rotateY(180deg);
+  }
+  .voucher .front,
+  .voucher .back {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 0;
-    border-left: 90px solid transparent;
-    border-right: 90px solid transparent;
-    border-bottom: 55px solid #fcdce5;
-    transform-origin: top;
-    transition: transform 0.6s ease;
+    width: 100%;
+    height: 100%;
+    border-radius: 14px;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 600;
+    color: #fff;
+    box-shadow: 0 4px 10px var(--shadow);
   }
-  .envelope.open .flap {
-    transform: rotateX(180deg);
+  .voucher .front {
+    color: white;
+    font-size: 32px;
   }
-  .heart {
-    position: absolute;
-    top: 38px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 22px;
-    height: 22px;
-    background: #ff6b81;
-    clip-path: polygon(50% 0%, 100% 38%, 80% 100%, 50% 75%, 20% 100%, 0% 38%);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  }
-
-  .voucher-content {
-    display: none;
-    text-align: center;
-    margin-top: 18px;
-    animation: fadeIn 0.7s ease forwards;
-  }
-  .voucher-content h3 {
+  .voucher .back {
+    background: #fff;
     color: #f58ea8;
-    margin-bottom: 10px;
-  }
-  .voucher-content p {
+    transform: rotateY(180deg);
+    border: 2px dashed #f58ea8;
     font-size: 16px;
-  }
-  .voucher-content img {
-    width: 120px;
-    border-radius: 12px;
-    margin: 8px;
-    border: 3px solid #fbd5e3;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    padding: 10px;
+    text-align: center;
   }
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+  /* Different pastel heart colors */
+  .v1 .front { background: linear-gradient(135deg, #f58ea8, #fcd1dc); }
+  .v2 .front { background: linear-gradient(135deg, #f7a8b8, #ffd1e0); }
+  .v3 .front { background: linear-gradient(135deg, #f9b7a1, #ffe1c4); }
+  .v4 .front { background: linear-gradient(135deg, #bfa1f9, #e6d5ff); }
+  .v5 .front { background: linear-gradient(135deg, #f9a1dc, #ffd6ef); }
+
+  .voucher .front::after {
+    content: "💖";
+    font-size: 38px;
   }
 </style>
 </head>
@@ -253,68 +234,39 @@
     </p>
   </section>
 
-  <!-- Voucher Envelopes -->
+  <!-- Vouchers -->
   <section class="vouchers">
     <h2>🎁 Love Vouchers</h2>
-    <div class="envelopes">
-      <div class="envelope" data-id="1">
-        <div class="flap"></div>
-        <div class="heart"></div>
+    <div class="voucher-grid">
+      <div class="voucher v1" onclick="flipVoucher(this)">
+        <div class="inner">
+          <div class="front"></div>
+          <div class="back">🍿 Movie Night – Your pick, my treat ❤️</div>
+        </div>
       </div>
-      <div class="envelope" data-id="2">
-        <div class="flap"></div>
-        <div class="heart"></div>
+      <div class="voucher v2" onclick="flipVoucher(this)">
+        <div class="inner">
+          <div class="front"></div>
+          <div class="back">💆 Massage – One relaxing session 💖</div>
+        </div>
       </div>
-      <div class="envelope" data-id="3">
-        <div class="flap"></div>
-        <div class="heart"></div>
+      <div class="voucher v3" onclick="flipVoucher(this)">
+        <div class="inner">
+          <div class="front"></div>
+          <div class="back">🍝 Dinner – I’ll cook your favorite meal 🍷</div>
+        </div>
       </div>
-      <div class="envelope" data-id="4">
-        <div class="flap"></div>
-        <div class="heart"></div>
+      <div class="voucher v4" onclick="flipVoucher(this)">
+        <div class="inner">
+          <div class="front"></div>
+          <div class="back">🧸 Cuddle Marathon – Unlimited time 💞</div>
+        </div>
       </div>
-      <div class="envelope" data-id="5">
-        <div class="flap"></div>
-        <div class="heart"></div>
-      </div>
-    </div>
-
-    <!-- Voucher contents -->
-    <div id="voucherContents">
-      <div class="voucher-content" id="voucher1">
-        <h3>🍿 Movie Night Voucher</h3>
-        <p>Your pick, my treat. I’ll bring snacks and cuddles ❤️</p>
-        <img src="vouchers/movie1.jpg">
-        <img src="vouchers/movie2.jpg">
-        <img src="vouchers/movie3.jpg">
-      </div>
-      <div class="voucher-content" id="voucher2">
-        <h3>💆 Massage Voucher</h3>
-        <p>Redeem for one relaxing back massage from me 💖</p>
-        <img src="vouchers/massage1.jpg">
-        <img src="vouchers/massage2.jpg">
-        <img src="vouchers/massage3.jpg">
-      </div>
-      <div class="voucher-content" id="voucher3">
-        <h3>🍝 Dinner Voucher</h3>
-        <p>I’ll cook your favorite meal and set up a romantic dinner 🍷</p>
-        <img src="vouchers/dinner1.jpg">
-        <img src="vouchers/dinner2.jpg">
-        <img src="vouchers/dinner3.jpg">
-      </div>
-      <div class="voucher-content" id="voucher4">
-        <h3>❤️ Cuddle Marathon</h3>
-        <p>No time limit, just endless hugs and warmth 🧸</p>
-        <img src="vouchers/cuddle1.jpg">
-        <img src="vouchers/cuddle2.jpg">
-        <img src="vouchers/cuddle3.jpg">
-      </div>
-      <div class="voucher-content" id="voucher5">
-        <h3>✨ One Wish Voucher</h3>
-        <p>Whatever you wish for — I’ll make it happen (within reason 😉)</p>
-        <img src="vouchers/wish1.jpg">
-        <img src="vouchers/wish2.jpg">
-        <img src="vouchers/wish3.jpg">
+      <div class="voucher v5" onclick="flipVoucher(this)">
+        <div class="inner">
+          <div class="front"></div>
+          <div class="back">✨ One Wish – Anything you want 😉</div>
+        </div>
       </div>
     </div>
   </section>
@@ -373,7 +325,7 @@
   const videoGallery = document.getElementById('videoGallery');
   for (let i = 1; i <= 9; i++) {
     const f = document.createElement('div');
-    f.className = 'frame' + (i === 9 ? ' featured' : '');
+    f.className = 'frame';
     f.dataset.type = 'video';
     f.dataset.src = `videos/vid${i}.mp4`;
     f.innerHTML = `<video src="videos/vid${i}.mp4" muted autoplay loop playsinline preload="metadata"></video>`;
@@ -400,18 +352,10 @@
     musicPlayer.play();
   });
 
-  // --- Envelope Logic
-  const envelopes = document.querySelectorAll('.envelope');
-  envelopes.forEach(env => {
-    env.addEventListener('click', () => {
-      const id = env.dataset.id;
-      env.classList.add('open');
-      document.querySelectorAll('.voucher-content').forEach(v => v.style.display = 'none');
-      setTimeout(() => {
-        document.getElementById(`voucher${id}`).style.display = 'block';
-      }, 600);
-    });
-  });
+  // --- Voucher Flip
+  function flipVoucher(card) {
+    card.classList.toggle('flipped');
+  }
 </script>
 </body>
 </html>
