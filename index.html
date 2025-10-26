@@ -45,11 +45,11 @@
     margin-bottom: 10px;
   }
 
-  /* Photo & Video Frames */
+  /* Equal width photo and video boxes */
   .frames {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 16px;
+    gap: 14px;
     justify-items: center;
   }
   .frame {
@@ -61,7 +61,6 @@
     cursor: pointer;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
     width: 100%;
-    max-width: 260px;
   }
   .frame:hover {
     transform: scale(1.03);
@@ -69,14 +68,14 @@
   }
   .frame img, .frame video {
     width: 100%;
-    height: 230px;
+    height: 250px;
     object-fit: cover;
     border-radius: 12px;
     border: 3px solid #fbd5e3;
     display: block;
   }
 
-  .letter, .player, .videos, .vouchers {
+  .letter, .player, .videos {
     background: var(--panel);
     padding: 20px;
     border-radius: 16px;
@@ -123,15 +122,19 @@
     cursor: pointer;
   }
 
-  /* Flip Vouchers */
+  /* Voucher Flip Cards */
+  .vouchers {
+    text-align: center;
+    margin-top: 50px;
+  }
   .vouchers h2 {
     margin-bottom: 20px;
   }
   .voucher-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 18px;
-    justify-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
   }
   .voucher {
     width: 180px;
@@ -139,56 +142,52 @@
     perspective: 1000px;
     cursor: pointer;
   }
-  .voucher .inner {
+  .voucher-inner {
     position: relative;
     width: 100%;
     height: 100%;
-    transition: transform 0.7s;
+    transition: transform 0.8s;
     transform-style: preserve-3d;
   }
-  .voucher.flipped .inner {
+  .voucher.flip .voucher-inner {
     transform: rotateY(180deg);
   }
-  .voucher .front,
-  .voucher .back {
+  .voucher-front, .voucher-back {
     position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  }
+  .voucher-front {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .voucher-front .heart {
+    width: 30px;
+    height: 30px;
+    background: #fff;
+    clip-path: polygon(50% 0%, 100% 38%, 80% 100%, 50% 75%, 20% 100%, 0% 38%);
+  }
+  .voucher-back {
+    transform: rotateY(180deg);
+    overflow: hidden;
+  }
+  .voucher-back img {
     width: 100%;
     height: 100%;
-    border-radius: 14px;
-    backface-visibility: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    font-weight: 600;
-    color: #fff;
-    box-shadow: 0 4px 10px var(--shadow);
-  }
-  .voucher .front {
-    color: white;
-    font-size: 32px;
-  }
-  .voucher .back {
-    background: #fff;
-    color: #f58ea8;
-    transform: rotateY(180deg);
-    border: 2px dashed #f58ea8;
-    font-size: 16px;
-    padding: 10px;
-    text-align: center;
+    object-fit: cover;
+    border-radius: 10px;
   }
 
-  /* Different pastel heart colors */
-  .v1 .front { background: linear-gradient(135deg, #f58ea8, #fcd1dc); }
-  .v2 .front { background: linear-gradient(135deg, #f7a8b8, #ffd1e0); }
-  .v3 .front { background: linear-gradient(135deg, #f9b7a1, #ffe1c4); }
-  .v4 .front { background: linear-gradient(135deg, #bfa1f9, #e6d5ff); }
-  .v5 .front { background: linear-gradient(135deg, #f9a1dc, #ffd6ef); }
+  /* Color themes */
+  .voucher[data-id="1"] .voucher-front { background: #f58ea8; }
+  .voucher[data-id="2"] .voucher-front { background: #fbbf24; }
+  .voucher[data-id="3"] .voucher-front { background: #60a5fa; }
+  .voucher[data-id="4"] .voucher-front { background: #34d399; }
+  .voucher[data-id="5"] .voucher-front { background: #a78bfa; }
 
-  .voucher .front::after {
-    content: "💖";
-    font-size: 38px;
-  }
 </style>
 </head>
 <body>
@@ -234,38 +233,38 @@
     </p>
   </section>
 
-  <!-- Vouchers -->
+  <!-- Flipping Vouchers -->
   <section class="vouchers">
     <h2>🎁 Love Vouchers</h2>
     <div class="voucher-grid">
-      <div class="voucher v1" onclick="flipVoucher(this)">
-        <div class="inner">
-          <div class="front"></div>
-          <div class="back">🍿 Movie Night – Your pick, my treat ❤️</div>
+      <div class="voucher" data-id="1">
+        <div class="voucher-inner">
+          <div class="voucher-front"><div class="heart"></div></div>
+          <div class="voucher-back"><img src="vouchers/v1.png" alt="Voucher 1"></div>
         </div>
       </div>
-      <div class="voucher v2" onclick="flipVoucher(this)">
-        <div class="inner">
-          <div class="front"></div>
-          <div class="back">💆 Massage – One relaxing session 💖</div>
+      <div class="voucher" data-id="2">
+        <div class="voucher-inner">
+          <div class="voucher-front"><div class="heart"></div></div>
+          <div class="voucher-back"><img src="vouchers/v2.png" alt="Voucher 2"></div>
         </div>
       </div>
-      <div class="voucher v3" onclick="flipVoucher(this)">
-        <div class="inner">
-          <div class="front"></div>
-          <div class="back">🍝 Dinner – I’ll cook your favorite meal 🍷</div>
+      <div class="voucher" data-id="3">
+        <div class="voucher-inner">
+          <div class="voucher-front"><div class="heart"></div></div>
+          <div class="voucher-back"><img src="vouchers/v3.png" alt="Voucher 3"></div>
         </div>
       </div>
-      <div class="voucher v4" onclick="flipVoucher(this)">
-        <div class="inner">
-          <div class="front"></div>
-          <div class="back">🧸 Cuddle Marathon – Unlimited time 💞</div>
+      <div class="voucher" data-id="4">
+        <div class="voucher-inner">
+          <div class="voucher-front"><div class="heart"></div></div>
+          <div class="voucher-back"><img src="vouchers/v4.png" alt="Voucher 4"></div>
         </div>
       </div>
-      <div class="voucher v5" onclick="flipVoucher(this)">
-        <div class="inner">
-          <div class="front"></div>
-          <div class="back">✨ One Wish – Anything you want 😉</div>
+      <div class="voucher" data-id="5">
+        <div class="voucher-inner">
+          <div class="voucher-front"><div class="heart"></div></div>
+          <div class="voucher-back"><img src="vouchers/v5.png" alt="Voucher 5"></div>
         </div>
       </div>
     </div>
@@ -279,6 +278,7 @@
 </main>
 
 <script>
+  // Lightbox Logic
   const lightbox = document.getElementById('lightbox');
   const mediaHolder = document.getElementById('mediaHolder');
   const closeModal = document.getElementById('closeModal');
@@ -306,7 +306,7 @@
     mediaHolder.innerHTML = '';
   };
 
-  // --- Load Photos
+  // Photos
   const photoGallery = document.getElementById('photoGallery');
   for (let i = 1; i <= 366; i++) {
     const f = document.createElement('div');
@@ -321,7 +321,7 @@
     if (f) openFrame(f);
   });
 
-  // --- Load Videos
+  // Videos
   const videoGallery = document.getElementById('videoGallery');
   for (let i = 1; i <= 9; i++) {
     const f = document.createElement('div');
@@ -336,7 +336,7 @@
     if (f) openFrame(f);
   });
 
-  // --- Music Playlist
+  // Music Playlist
   const songs = [
     'songs/song1.mp3',
     'songs/song2.mp3',
@@ -352,10 +352,10 @@
     musicPlayer.play();
   });
 
-  // --- Voucher Flip
-  function flipVoucher(card) {
-    card.classList.toggle('flipped');
-  }
+  // Voucher flip logic
+  document.querySelectorAll('.voucher').forEach(v => {
+    v.addEventListener('click', () => v.classList.toggle('flip'));
+  });
 </script>
 </body>
 </html>
