@@ -45,7 +45,7 @@
     margin-bottom: 10px;
   }
 
-  /* Equal width photo and video boxes */
+  /* Equal width for photo/video boxes */
   .frames {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -83,17 +83,17 @@
     box-shadow: 0 6px 18px var(--shadow);
   }
 
-  /* Modal */
+  /* Modal / Lightbox */
   .modal {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.75);
+    background: rgba(0,0,0,0.8);
     display: flex;
     justify-content: center;
     align-items: center;
     opacity: 0;
     pointer-events: none;
-    transition: opacity .2s;
+    transition: opacity .3s ease;
     z-index: 99;
   }
   .modal.open {
@@ -101,15 +101,17 @@
     pointer-events: all;
   }
   .modal .card {
-    background: #111;
+    background: transparent;
     border-radius: 12px;
     max-width: 90%;
     max-height: 90%;
-    padding: 12px;
+    padding: 0;
   }
   .modal img, .modal video {
     width: 100%;
+    height: auto;
     border-radius: 10px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.3);
   }
   .close {
     position: absolute;
@@ -118,7 +120,7 @@
     background: none;
     border: none;
     color: #fff;
-    font-size: 22px;
+    font-size: 28px;
     cursor: pointer;
   }
 
@@ -126,9 +128,6 @@
   .vouchers {
     text-align: center;
     margin-top: 50px;
-  }
-  .vouchers h2 {
-    margin-bottom: 20px;
   }
   .voucher-grid {
     display: flex;
@@ -179,15 +178,18 @@
     height: 100%;
     object-fit: cover;
     border-radius: 10px;
+    transition: transform 0.3s;
+  }
+  .voucher-back img:hover {
+    transform: scale(1.05);
   }
 
-  /* Color themes */
+  /* Voucher color themes */
   .voucher[data-id="1"] .voucher-front { background: #f58ea8; }
   .voucher[data-id="2"] .voucher-front { background: #fbbf24; }
   .voucher[data-id="3"] .voucher-front { background: #60a5fa; }
   .voucher[data-id="4"] .voucher-front { background: #34d399; }
   .voucher[data-id="5"] .voucher-front { background: #a78bfa; }
-
 </style>
 </head>
 <body>
@@ -278,26 +280,12 @@
 </main>
 
 <script>
-  // Lightbox Logic
   const lightbox = document.getElementById('lightbox');
   const mediaHolder = document.getElementById('mediaHolder');
   const closeModal = document.getElementById('closeModal');
 
-  function openFrame(f) {
-    const type = f.dataset.type, src = f.dataset.src;
-    mediaHolder.innerHTML = '';
-    if (type === 'photo') {
-      const img = document.createElement('img');
-      img.src = src;
-      mediaHolder.appendChild(img);
-    } else if (type === 'video') {
-      const vid = document.createElement('video');
-      vid.src = src;
-      vid.controls = true;
-      vid.autoplay = true;
-      vid.muted = false;
-      mediaHolder.appendChild(vid);
-    }
+  function openLightbox(src) {
+    mediaHolder.innerHTML = `<img src="${src}" alt="zoomed voucher">`;
     lightbox.classList.add('open');
   }
 
@@ -306,7 +294,7 @@
     mediaHolder.innerHTML = '';
   };
 
-  // Photos
+  // Photo gallery
   const photoGallery = document.getElementById('photoGallery');
   for (let i = 1; i <= 366; i++) {
     const f = document.createElement('div');
@@ -318,32 +306,25 @@
   }
   photoGallery.addEventListener('click', e => {
     const f = e.target.closest('.frame');
-    if (f) openFrame(f);
+    if (f) openLightbox(f.dataset.src);
   });
 
-  // Videos
+  // Video gallery
   const videoGallery = document.getElementById('videoGallery');
   for (let i = 1; i <= 9; i++) {
     const f = document.createElement('div');
     f.className = 'frame';
-    f.dataset.type = 'video';
     f.dataset.src = `videos/vid${i}.mp4`;
     f.innerHTML = `<video src="videos/vid${i}.mp4" muted autoplay loop playsinline preload="metadata"></video>`;
     videoGallery.appendChild(f);
   }
   videoGallery.addEventListener('click', e => {
-    const f = e.target.closest('.frame');
-    if (f) openFrame(f);
+    const src = e.target.closest('.frame')?.dataset.src;
+    if (src) mediaHolder.innerHTML = `<video src="${src}" controls autoplay></video>`, lightbox.classList.add('open');
   });
 
-  // Music Playlist
-  const songs = [
-    'songs/song1.mp3',
-    'songs/song2.mp3',
-    'songs/song3.mp3',
-    'songs/song4.mp3',
-    'songs/song5.mp3'
-  ];
+  // Music playlist
+  const songs = ['songs/song1.mp3','songs/song2.mp3','songs/song3.mp3','songs/song4.mp3','songs/song5.mp3'];
   const musicPlayer = document.getElementById('musicPlayer');
   let currentSong = 0;
   musicPlayer.addEventListener('ended', () => {
@@ -352,9 +333,17 @@
     musicPlayer.play();
   });
 
-  // Voucher flip logic
-  document.querySelectorAll('.voucher').forEach(v => {
-    v.addEventListener('click', () => v.classList.toggle('flip'));
+  // Voucher flipping + zoom
+  document.querySelectorAll('.voucher').forEach(voucher => {
+    const backImg = voucher.querySelector('.voucher-back img');
+    voucher.addEventListener('click', e => {
+      if (e.target === backImg) {
+        e.stopPropagation();
+        openLightbox(backImg.src);
+      } else {
+        voucher.classList.toggle('flip');
+      }
+    });
   });
 </script>
 </body>
